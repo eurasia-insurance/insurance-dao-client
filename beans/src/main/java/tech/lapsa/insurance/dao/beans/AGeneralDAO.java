@@ -86,13 +86,13 @@ public abstract class AGeneralDAO<T, I> implements GeneralDAO<T, I> {
 
     // PROTECTED
 
-    protected <X> TypedQuery<X> putNoCacheHints(TypedQuery<X> query) {
+    protected <X> TypedQuery<X> putNoCacheHints(final TypedQuery<X> query) {
 	return query
 		.setHint(HINT_JAVAX_PERSISTENCE_CACHE_RETREIVE_MODE, CacheRetrieveMode.BYPASS)
 		.setHint(HINT_JAVAX_PERSISTENCE_CACHE_STORE_MODE, CacheStoreMode.REFRESH);
     }
 
-    protected <X> List<X> resultListNoCached(TypedQuery<X> query) {
+    protected <X> List<X> resultListNoCached(final TypedQuery<X> query) {
 	return putNoCacheHints(query)
 		.getResultList();
     }
