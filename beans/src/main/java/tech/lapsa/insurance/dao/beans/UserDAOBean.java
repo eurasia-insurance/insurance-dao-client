@@ -33,8 +33,8 @@ public class UserDAOBean extends AGeneralDAO<User, Integer> implements UserDAO {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public User findByLogin(final String login) throws NotFound {
-	UserLogin userLogin = userLoginDAO.findByName(login);
+    public User getByLogin(final String login) throws NotFound {
+	UserLogin userLogin = userLoginDAO.getByName(login);
 	return userLogin.getUser();
     }
 

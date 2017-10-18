@@ -6,21 +6,21 @@ import java.util.stream.Collectors;
 
 public interface GeneralDAO<T, I> {
 
-    T findById(I id) throws NotFound;
+    T getById(I id) throws NotFound;
 
     default Optional<T> optionalById(I id) {
 	try {
-	    return Optional.of(findById(id));
+	    return Optional.of(getById(id));
 	} catch (NotFound e) {
 	    return Optional.empty();
 	}
     }
 
-    T findByIdByPassCache(I id) throws NotFound;
+    T getByIdByPassCache(I id) throws NotFound;
 
     default Optional<T> optionalByIdByPassCache(I id) throws NotFound {
 	try {
-	    return Optional.of(findByIdByPassCache(id));
+	    return Optional.of(getByIdByPassCache(id));
 	} catch (NotFound e) {
 	    return Optional.empty();
 	}

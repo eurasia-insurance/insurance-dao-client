@@ -10,11 +10,11 @@ import com.lapsa.insurance.domain.crm.User;
 @Local
 public interface UserDAO extends GeneralDAO<User, Integer> {
 
-    User findByLogin(String login) throws NotFound;
+    User getByLogin(String login) throws NotFound;
 
     default Optional<User> optionalByLogin(String login) {
 	try {
-	    return Optional.of(findByLogin(login));
+	    return Optional.of(getByLogin(login));
 	} catch (NotFound e) {
 	    return Optional.empty();
 	}
