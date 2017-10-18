@@ -13,9 +13,7 @@ import org.junit.Test;
 
 import com.lapsa.insurance.domain.policy.PolicyRequest;
 
-import tech.lapsa.insurance.dao.EntityNotFound;
-import tech.lapsa.insurance.dao.NotPersistedException;
-import tech.lapsa.insurance.dao.PeristenceOperationFailed;
+import tech.lapsa.insurance.dao.NotFound;
 import tech.lapsa.insurance.dao.PolicyRequestDAO;
 
 public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
@@ -33,13 +31,13 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
     }
 
     @Before
-    public void createEntity() throws PeristenceOperationFailed {
+    public void createEntity() {
 	logger.info("createEntity(): Create entity");
 	entity = dao.save(newPolicyRequest());
     }
 
     @Test
-    public void testCreateAndSave() throws PeristenceOperationFailed, EntityNotFound {
+    public void testCreateAndSave() throws NotFound {
 	PolicyRequest testFind = dao.findById(entity.getId());
 	assertThat(testFind, not(nullValue()));
     }
@@ -47,7 +45,7 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
     private static final String CHANGED_REQUESTER_NAME = "NEW REQUESTER";
 
     @Test
-    public void testCreateAndSaveAndChangeAndUpdate() throws PeristenceOperationFailed, EntityNotFound {
+    public void testCreateAndSaveAndChangeAndUpdate() throws NotFound {
 	logger.info("testCreateAndSaveAndChangeAndUpdate(): Find entity");
 	PolicyRequest testFind = dao.findById(entity.getId());
 
@@ -68,7 +66,7 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
     }
 
     @Test
-    public void testCreateAndSaveAndChangeAndReset() throws PeristenceOperationFailed, EntityNotFound, NotPersistedException {
+    public void testCreateAndSaveAndChangeAndReset() throws NotFound {
 	logger.info("testCreateAndSaveAndChangeAndReset(): Find entity");
 	PolicyRequest testFind = dao.findById(entity.getId());
 

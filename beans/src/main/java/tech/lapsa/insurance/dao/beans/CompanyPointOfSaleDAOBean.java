@@ -11,7 +11,6 @@ import javax.persistence.criteria.Root;
 import com.lapsa.insurance.domain.CompanyPointOfSale;
 
 import tech.lapsa.insurance.dao.CompanyPointOfSaleDAO;
-import tech.lapsa.insurance.dao.PeristenceOperationFailed;
 
 @Stateless
 public class CompanyPointOfSaleDAOBean extends AGeneralDAO<CompanyPointOfSale, Integer>
@@ -22,17 +21,13 @@ public class CompanyPointOfSaleDAOBean extends AGeneralDAO<CompanyPointOfSale, I
     }
 
     @Override
-    public List<CompanyPointOfSale> findAll() throws PeristenceOperationFailed {
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<CompanyPointOfSale> cq = cb.createQuery(CompanyPointOfSale.class);
-	    Root<CompanyPointOfSale> root = cq.from(CompanyPointOfSale.class);
-	    cq.select(root);
-	    TypedQuery<CompanyPointOfSale> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+    public List<CompanyPointOfSale> findAll() {
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<CompanyPointOfSale> cq = cb.createQuery(CompanyPointOfSale.class);
+	Root<CompanyPointOfSale> root = cq.from(CompanyPointOfSale.class);
+	cq.select(root);
+	TypedQuery<CompanyPointOfSale> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
 }

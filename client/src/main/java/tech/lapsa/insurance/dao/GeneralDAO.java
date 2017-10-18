@@ -4,32 +4,34 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import tech.lapsa.java.commons.function.MyObjects;
-
 public interface GeneralDAO<T, I> {
 
-    default T findById(I id) throws EntityNotFound {
-	return optionalById(id) //
-		.orElseThrow(() -> new EntityNotFound(
-			String.format("Entity %1$s with id = '%2$s' is not found", id.getClass().getName(), id)));
+    T findById(I id) throws NotFound;
+
+    default Optional<T> optionalById(I id) {
+	try {
+	    return Optional.of(findById(id));
+	} catch (NotFound e) {
+	    return Optional.empty();
+	}
     }
 
-    Optional<T> optionalById(I id);
+    T findByIdByPassCache(I id) throws NotFound;
 
-    default T findByIdByPassCache(I id) throws EntityNotFound {
-	return optionalByIdByPassCache(id) //
-		.orElseThrow(() -> new EntityNotFound(
-			String.format("Entity %1$s with id = '%2$s' is not found", id.getClass().getName(), id)));
+    default Optional<T> optionalByIdByPassCache(I id) throws NotFound {
+	try {
+	    return Optional.of(findByIdByPassCache(id));
+	} catch (NotFound e) {
+	    return Optional.empty();
+	}
     }
 
-    Optional<T> optionalByIdByPassCache(I id);
+    <ET extends T> ET save(ET entity);
 
-    <ET extends T> ET save(ET entity) throws PeristenceOperationFailed;
+    <ET extends T> ET restore(ET entity) throws NotFound;
 
-    <ET extends T> ET restore(ET entity) throws PeristenceOperationFailed, NotPersistedException;
-
-    default <ET extends T> Collection<ET> saveAll(Collection<ET> entities) throws PeristenceOperationFailed {
-	return MyObjects.requireNonNull(entities, "entities").stream() //
+    default <ET extends T> Collection<ET> saveAll(Collection<ET> entities) {
+	return entities.stream() //
 		.map(this::save) //
 		.collect(Collectors.toList());
     }
