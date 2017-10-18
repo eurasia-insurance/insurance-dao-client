@@ -19,9 +19,10 @@ import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.insurance.dao.GeneralRequestDAO;
 import tech.lapsa.insurance.dao.filter.RequestFilter;
+import tech.lapsa.patterns.dao.beans.Predictates;
 
 public abstract class AGeneralRequestDAO<T extends Request>
-	extends AGeneralDAO<T, Integer>
+	extends AEntityManagerDAO<T, Integer>
 	implements GeneralRequestDAO<T> {
 
     public AGeneralRequestDAO(Class<T> entityClass) {

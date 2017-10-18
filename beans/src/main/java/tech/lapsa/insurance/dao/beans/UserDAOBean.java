@@ -17,12 +17,12 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.domain.crm.UserLogin;
 import com.lapsa.insurance.domain.crm.User_;
 
-import tech.lapsa.insurance.dao.NotFound;
 import tech.lapsa.insurance.dao.UserDAO;
 import tech.lapsa.insurance.dao.UserLoginDAO;
+import tech.lapsa.patterns.dao.NotFound;
 
 @Stateless
-public class UserDAOBean extends AGeneralDAO<User, Integer> implements UserDAO {
+public class UserDAOBean extends AEntityManagerDAO<User, Integer> implements UserDAO {
 
     public UserDAOBean() {
 	super(User.class);
