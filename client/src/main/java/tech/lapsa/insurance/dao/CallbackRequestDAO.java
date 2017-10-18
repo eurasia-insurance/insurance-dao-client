@@ -6,5 +6,4 @@ import com.lapsa.insurance.domain.CallbackRequest;
 
 @Local
 public interface CallbackRequestDAO extends GeneralRequestDAO<CallbackRequest> {
-
 }

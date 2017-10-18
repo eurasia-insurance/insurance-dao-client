@@ -10,14 +10,13 @@ import tech.lapsa.insurance.dao.filter.RequestFilter;
 
 public interface GeneralRequestDAO<T extends Request> extends GeneralDAO<T, Integer> {
 
-    List<T> findByStatus(RequestStatus status) throws PeristenceOperationFailed;
+    List<T> findByStatus(RequestStatus status);
 
-    List<T> findAllOpen() throws PeristenceOperationFailed;
+    List<T> findAllOpen();
 
-    List<T> findAll() throws PeristenceOperationFailed;
+    List<T> findAll();
 
-    List<T> findByFilter(RequestFilter filter) throws PeristenceOperationFailed;
+    List<T> findByFilter(RequestFilter filter);
 
-    List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators)
-	    throws PeristenceOperationFailed;
+    List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators);
 }

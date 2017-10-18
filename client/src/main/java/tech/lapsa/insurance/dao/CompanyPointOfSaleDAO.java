@@ -8,5 +8,6 @@ import com.lapsa.insurance.domain.CompanyPointOfSale;
 
 @Local
 public interface CompanyPointOfSaleDAO extends GeneralDAO<CompanyPointOfSale, Integer> {
-    List<CompanyPointOfSale> findAll() throws PeristenceOperationFailed;
+
+    List<CompanyPointOfSale> findAll();
 }

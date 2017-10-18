@@ -1,16 +1,38 @@
 package tech.lapsa.insurance.dao;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public interface GeneralDAO<T, I> {
-    T findById(I id) throws EntityNotFound, PeristenceOperationFailed;
 
-    T findByIdByPassCache(I id) throws EntityNotFound, PeristenceOperationFailed;
+    T findById(I id) throws NotFound;
 
-    <ET extends T> ET save(ET entity) throws PeristenceOperationFailed;
+    default Optional<T> optionalById(I id) {
+	try {
+	    return Optional.of(findById(id));
+	} catch (NotFound e) {
+	    return Optional.empty();
+	}
+    }
 
-    <ET extends T> ET restore(ET entity) throws PeristenceOperationFailed, NotPersistedException;
+    T findByIdByPassCache(I id) throws NotFound;
 
-    void saveAll(List<T> entities) throws PeristenceOperationFailed;
+    default Optional<T> optionalByIdByPassCache(I id) throws NotFound {
+	try {
+	    return Optional.of(findByIdByPassCache(id));
+	} catch (NotFound e) {
+	    return Optional.empty();
+	}
+    }
 
+    <ET extends T> ET save(ET entity);
+
+    <ET extends T> ET restore(ET entity) throws NotFound;
+
+    default <ET extends T> Collection<ET> saveAll(Collection<ET> entities) {
+	return entities.stream() //
+		.map(this::save) //
+		.collect(Collectors.toList());
+    }
 }
