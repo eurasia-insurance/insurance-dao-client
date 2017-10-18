@@ -13,8 +13,7 @@ import com.lapsa.insurance.domain.policy.PolicyRequest;
 import com.lapsa.insurance.elements.PaymentMethod;
 import com.lapsa.insurance.elements.PaymentStatus;
 
-import tech.lapsa.insurance.dao.EntityNotFound;
-import tech.lapsa.insurance.dao.PeristenceOperationFailed;
+import tech.lapsa.insurance.dao.NotFound;
 import tech.lapsa.insurance.dao.PolicyRequestDAO;
 
 public class PolicyRequestDAO_findOpenUnpaidByPaycardOnline extends ArquillianBaseTestCase {
@@ -23,7 +22,7 @@ public class PolicyRequestDAO_findOpenUnpaidByPaycardOnline extends ArquillianBa
     private PolicyRequestDAO dao;
 
     @Test
-    public void generalTest() throws PeristenceOperationFailed, EntityNotFound {
+    public void generalTest() throws NotFound {
 	PolicyRequest o1 = TestObjectsCreatorHelper.generatePolicyRequest();
 	o1.getPayment().setMethod(PaymentMethod.PAYCARD_ONLINE);
 	o1.getPayment().setExternalId("111");
