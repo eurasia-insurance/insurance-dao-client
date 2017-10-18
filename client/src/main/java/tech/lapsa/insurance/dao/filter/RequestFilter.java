@@ -2,6 +2,7 @@ package tech.lapsa.insurance.dao.filter;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
 
 import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.InsuranceRequestType;
@@ -15,6 +16,8 @@ import com.lapsa.insurance.elements.RequestStatus;
 import com.lapsa.insurance.elements.TransactionProblem;
 import com.lapsa.insurance.elements.TransactionStatus;
 
+import tech.lapsa.java.commons.function.MyOptionals;
+
 public interface RequestFilter {
 
     // Request properties
@@ -26,6 +29,10 @@ public interface RequestFilter {
     String getRequesterIdNumberMask();
 
     RequestSource getRequestSource();
+
+    default Optional<RequestSource> optionalRequestSource() {
+	return MyOptionals.of(getRequestSource());
+    }
 
     RequestStatus getRequestStatus();
 
@@ -51,20 +58,47 @@ public interface RequestFilter {
 
     InsuranceRequestType getRequestType();
 
+    default Optional<InsuranceRequestType> optionalRequestType() {
+	return MyOptionals.of(getRequestType());
+    }
+
     PaymentMethod getPaymentMethod();
+
+    default Optional<PaymentMethod> optionalPaymentMethod() {
+	return MyOptionals.of(getPaymentMethod());
+    }
 
     PaymentStatus getPaymentStatus();
 
+    default Optional<PaymentStatus> optionalPaymentStatus() {
+	return MyOptionals.of(getPaymentStatus());
+    }
+
     ObtainingMethod getObtainingMethod();
+
+    default Optional<ObtainingMethod> optionalObtainingMethod() {
+	return MyOptionals.of(getObtainingMethod());
+    }
 
     ObtainingStatus getObtainingStatus();
 
+    default Optional<ObtainingStatus> optionalObtainingStatus() {
+	return MyOptionals.of(getObtainingStatus());
+    }
+
     TransactionStatus getTransactionStatus();
+
+    default Optional<TransactionStatus> optionalTransactionStatus() {
+	return MyOptionals.of(getTransactionStatus());
+    }
 
     String getAgreementNumberMask();
 
     TransactionProblem getTransactionProblem();
 
-    ZoneId getZoneId();
+    default Optional<TransactionProblem> optionalTransactionProblem() {
+	return MyOptionals.of(getTransactionProblem());
+    }
 
+    ZoneId getZoneId();
 }

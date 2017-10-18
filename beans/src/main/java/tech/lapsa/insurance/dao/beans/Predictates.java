@@ -2,6 +2,7 @@ package tech.lapsa.insurance.dao.beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
@@ -16,14 +17,15 @@ public final class Predictates {
 	AND, OR
     };
 
-    public static Predicate textMatches(CriteriaBuilder cb, Expression<String> expression, String matchesTo) {
+    public static Optional<Predicate> textMatches(CriteriaBuilder cb, Expression<String> expression, String matchesTo) {
 	return textMatches(MatchMode.AND, cb, expression, matchesTo);
     }
 
-    public static Predicate textMatches(MatchMode matchMode, CriteriaBuilder cb, Expression<String> expression,
+    public static Optional<Predicate> textMatches(MatchMode matchMode, CriteriaBuilder cb,
+	    Expression<String> expression,
 	    String matchesTo) {
 	if (matchesTo == null || matchesTo.trim().isEmpty())
-	    return null;
+	    return Optional.empty();
 	List<Predicate> words = new ArrayList<>();
 	for (String verb : matchesTo.split("\\s+")) {
 	    String pattern = '%' + verb.replaceAll("%", "") + '%';
@@ -32,10 +34,10 @@ public final class Predictates {
 	Predicate[] list = words.toArray(new Predicate[0]);
 	switch (matchMode) {
 	case OR:
-	    return cb.or(list);
+	    return Optional.of(cb.or(list));
 	case AND:
 	default:
-	    return cb.and(list);
+	    return Optional.of(cb.and(list));
 	}
     }
 }

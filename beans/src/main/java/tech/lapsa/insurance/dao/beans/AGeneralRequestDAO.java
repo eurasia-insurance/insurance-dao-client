@@ -87,28 +87,23 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	}
 
 	// requester name mask
-	{
-	    Predicate total = Predictates.textMatches(cb, root.get(Request_.requester).get(RequesterData_.name),
-		    filter.getRequesterNameMask());
-	    if (total != null)
-		whereOptions.add(total);
-	}
+	Predictates.textMatches(cb, root.get(Request_.requester).get(RequesterData_.name),
+		filter.getRequesterNameMask()) //
+		.ifPresent(whereOptions::add);
 
 	// requester ID number mask
-	{
-	    Predicate total = Predictates.textMatches(cb, root.get(Request_.requester).get(RequesterData_.idNumber),
-		    filter.getRequesterIdNumberMask());
-	    if (total != null)
-		whereOptions.add(total);
-	}
+	Predictates.textMatches(cb, root.get(Request_.requester).get(RequesterData_.idNumber),
+		filter.getRequesterIdNumberMask()) //
+		.ifPresent(whereOptions::add);
 
 	// request status
 	if (filter.getRequestStatus() != null)
 	    whereOptions.add(cb.equal(root.get(Request_.status), filter.getRequestStatus()));
 
 	// request source
-	if (filter.getRequestSource() != null)
-	    whereOptions.add(cb.equal(root.get(Request_.source), filter.getRequestSource()));
+	filter.optionalRequestSource() //
+		.map(x -> cb.equal(root.get(Request_.source), x)) //
+		.ifPresent(whereOptions::add);
 
 	// progress status
 	if (filter.getProgressStatus() != null)

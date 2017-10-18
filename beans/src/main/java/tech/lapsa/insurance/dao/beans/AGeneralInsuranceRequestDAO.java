@@ -36,48 +36,44 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	super.prepareRequestFilterPredictates(filter, cb, root, whereOptions);
 
 	// request type
-	if (filter.getRequestType() != null)
-	    whereOptions.add(cb.equal(root.get(InsuranceRequest_.type), filter.getRequestType()));
+	filter.optionalRequestType() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.type), x)) //
+		.ifPresent(whereOptions::add);
 
 	// payment method
-	if (filter.getPaymentMethod() != null)
-	    whereOptions.add(cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.method),
-		    filter.getPaymentMethod()));
+	filter.optionalPaymentMethod() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.method), x)) //
+		.ifPresent(whereOptions::add);
 
 	// payment status
-	if (filter.getPaymentStatus() != null)
-	    whereOptions.add(cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.status),
-		    filter.getPaymentStatus()));
+	filter.optionalPaymentStatus() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.status), x)) //
+		.ifPresent(whereOptions::add);
 
 	// obtaining method
-	if (filter.getObtainingMethod() != null)
-	    whereOptions.add(cb.equal(root.get(InsuranceRequest_.obtaining).get(ObtainingData_.method),
-		    filter.getObtainingMethod()));
+	filter.optionalObtainingMethod() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.obtaining).get(ObtainingData_.method), x)) //
+		.ifPresent(whereOptions::add);
 
 	// obtaining status
-	if (filter.getObtainingStatus() != null)
-	    whereOptions.add(cb.equal(root.get(InsuranceRequest_.obtaining).get(ObtainingData_.status),
-		    filter.getObtainingStatus()));
+	filter.optionalObtainingStatus() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.obtaining).get(ObtainingData_.status), x)) //
+		.ifPresent(whereOptions::add);
 
 	// transaction status
-	if (filter.getTransactionStatus() != null)
-	    whereOptions
-		    .add(cb.equal(root.get(InsuranceRequest_.transactionStatus),
-			    filter.getTransactionStatus()));
+	filter.optionalTransactionStatus() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.transactionStatus), x)) //
+		.ifPresent(whereOptions::add);
 
 	// agreement number mask
-	{
-	    Predicate total = Predictates.textMatches(cb, root.get(InsuranceRequest_.agreementNumber),
-		    filter.getAgreementNumberMask());
-	    if (total != null)
-		whereOptions.add(total);
-	}
+	Predictates.textMatches(cb, root.get(InsuranceRequest_.agreementNumber),
+		filter.getAgreementNumberMask()) //
+		.ifPresent(whereOptions::add);
 
 	// transaction problem
-	if (filter.getTransactionProblem() != null)
-	    whereOptions
-		    .add(cb.equal(root.get(InsuranceRequest_.transactionProblem),
-			    filter.getTransactionProblem()));
+	filter.optionalTransactionProblem() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.transactionProblem), x)) //
+		.ifPresent(whereOptions::add);
     }
 
     @Override
