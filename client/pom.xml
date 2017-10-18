@@ -17,7 +17,7 @@
 		<!-- tech -->
 	<dependency>
 		<groupId>tech.lapsa.patterns</groupId>
-		<artifactId>patterns-dao-client</artifactId>
+		<artifactId>patterns-dao-api</artifactId>
 		<scope>compile</scope>
 		<optional>false</optional>
 	</dependency>
