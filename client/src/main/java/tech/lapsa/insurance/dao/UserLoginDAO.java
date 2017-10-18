@@ -9,11 +9,11 @@ import com.lapsa.insurance.domain.crm.UserLogin;
 @Local
 public interface UserLoginDAO extends GeneralDAO<UserLogin, Integer> {
 
-    UserLogin findByName(String name) throws NotFound;
+    UserLogin getByName(String name) throws NotFound;
 
     default Optional<UserLogin> optionalByName(String name) {
 	try {
-	    return Optional.of(findByName(name));
+	    return Optional.of(getByName(name));
 	} catch (NotFound e) {
 	    return Optional.empty();
 	}

@@ -24,7 +24,7 @@ public class UserLoginDAOBean extends AGeneralDAO<UserLogin, Integer> implements
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public UserLogin findByName(final String login) throws NotFound {
+    public UserLogin getByName(final String login) throws NotFound {
 	try {
 	    CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<UserLogin> cq = cb.createQuery(entityClass);

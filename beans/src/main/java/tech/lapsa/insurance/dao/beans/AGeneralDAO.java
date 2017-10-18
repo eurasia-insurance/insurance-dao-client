@@ -40,14 +40,14 @@ public abstract class AGeneralDAO<T, I> implements GeneralDAO<T, I> {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public T findById(final I id) throws NotFound {
-	return findByIdAndHint(id, null);
+    public T getById(final I id) throws NotFound {
+	return getByIdAndHint(id, null);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public T findByIdByPassCache(final I id) throws NotFound {
-	return findByIdAndHint(id, MyMaps.of( //
+    public T getByIdByPassCache(final I id) throws NotFound {
+	return getByIdAndHint(id, MyMaps.of( //
 		HINT_JAVAX_PERSISTENCE_CACHE_RETREIVE_MODE, CacheRetrieveMode.BYPASS, //
 		HINT_JAVAX_PERSISTENCE_CACHE_STORE_MODE, CacheStoreMode.REFRESH //
 	));
@@ -99,7 +99,7 @@ public abstract class AGeneralDAO<T, I> implements GeneralDAO<T, I> {
 
     // PRIVATE
 
-    private T findByIdAndHint(final I id, Map<String, Object> hints)
+    private T getByIdAndHint(final I id, Map<String, Object> hints)
 	    throws NotFound {
 	MyObjects.requireNonNull(id, "id");
 	return Optional.ofNullable( //
