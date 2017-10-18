@@ -21,6 +21,7 @@ import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO;
 import tech.lapsa.insurance.dao.filter.RequestFilter;
+import tech.lapsa.patterns.dao.beans.Predictates;
 
 public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	extends AGeneralRequestDAO<T>

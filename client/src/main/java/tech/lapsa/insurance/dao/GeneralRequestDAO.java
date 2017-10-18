@@ -7,6 +7,7 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.insurance.dao.filter.RequestFilter;
+import tech.lapsa.patterns.dao.GeneralDAO;
 
 public interface GeneralRequestDAO<T extends Request> extends GeneralDAO<T, Integer> {
 

@@ -13,8 +13,8 @@ import com.lapsa.insurance.domain.policy.PolicyRequest;
 import com.lapsa.insurance.elements.PaymentMethod;
 import com.lapsa.insurance.elements.PaymentStatus;
 
-import tech.lapsa.insurance.dao.NotFound;
 import tech.lapsa.insurance.dao.PolicyRequestDAO;
+import tech.lapsa.patterns.dao.NotFound;
 
 public class PolicyRequestDAO_findOpenUnpaidByPaycardOnline extends ArquillianBaseTestCase {
 

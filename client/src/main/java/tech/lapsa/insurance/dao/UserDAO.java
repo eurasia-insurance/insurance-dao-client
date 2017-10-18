@@ -7,6 +7,9 @@ import javax.ejb.Local;
 
 import com.lapsa.insurance.domain.crm.User;
 
+import tech.lapsa.patterns.dao.GeneralDAO;
+import tech.lapsa.patterns.dao.NotFound;
+
 @Local
 public interface UserDAO extends GeneralDAO<User, Integer> {
 

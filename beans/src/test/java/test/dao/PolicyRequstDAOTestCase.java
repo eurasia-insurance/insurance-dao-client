@@ -13,8 +13,8 @@ import org.junit.Test;
 
 import com.lapsa.insurance.domain.policy.PolicyRequest;
 
-import tech.lapsa.insurance.dao.NotFound;
 import tech.lapsa.insurance.dao.PolicyRequestDAO;
+import tech.lapsa.patterns.dao.NotFound;
 
 public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
 

@@ -25,6 +25,7 @@
 		<javax-javaee-bom.version>7.0-SNAPSHOT</javax-javaee-bom.version>
 		<java-commons-root.version>1.0-SNAPSHOT</java-commons-root.version>
 		<!-- tech -->
+		<patterns-dao.version>1.0-SNAPSHOT</patterns-dao.version>
 		<lapsa-arquillian-test.version>1.0-SNAPSHOT</lapsa-arquillian-test.version>
 		<!-- oldies -->
 		<insurance-lib.version>2.3-SNAPSHOT</insurance-lib.version>
@@ -45,6 +46,13 @@
 				<groupId>tech.lapsa.java</groupId>
 				<artifactId>java-commons-root</artifactId>
 				<version>${java-commons-root.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>tech.lapsa.patterns</groupId>
+				<artifactId>patterns-dao-root</artifactId>
+				<version>${patterns-dao.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

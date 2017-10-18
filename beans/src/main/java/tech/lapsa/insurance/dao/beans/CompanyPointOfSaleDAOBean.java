@@ -13,7 +13,7 @@ import com.lapsa.insurance.domain.CompanyPointOfSale;
 import tech.lapsa.insurance.dao.CompanyPointOfSaleDAO;
 
 @Stateless
-public class CompanyPointOfSaleDAOBean extends AGeneralDAO<CompanyPointOfSale, Integer>
+public class CompanyPointOfSaleDAOBean extends AEntityManagerDAO<CompanyPointOfSale, Integer>
 	implements CompanyPointOfSaleDAO {
 
     public CompanyPointOfSaleDAOBean() {

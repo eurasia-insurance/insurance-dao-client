@@ -12,11 +12,11 @@ import javax.persistence.criteria.Root;
 import com.lapsa.insurance.domain.crm.UserLogin;
 import com.lapsa.insurance.domain.crm.UserLogin_;
 
-import tech.lapsa.insurance.dao.NotFound;
 import tech.lapsa.insurance.dao.UserLoginDAO;
+import tech.lapsa.patterns.dao.NotFound;
 
 @Stateless
-public class UserLoginDAOBean extends AGeneralDAO<UserLogin, Integer> implements UserLoginDAO {
+public class UserLoginDAOBean extends AEntityManagerDAO<UserLogin, Integer> implements UserLoginDAO {
 
     public UserLoginDAOBean() {
 	super(UserLogin.class);
