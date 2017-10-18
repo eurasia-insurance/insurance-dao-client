@@ -17,13 +17,13 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.domain.crm.UserLogin;
 import com.lapsa.insurance.domain.crm.User_;
 
-import tech.lapsa.insurance.dao.EntityNotFound;
-import tech.lapsa.insurance.dao.PeristenceOperationFailed;
+import tech.lapsa.insurance.dao.NotFound;
 import tech.lapsa.insurance.dao.UserDAO;
 import tech.lapsa.insurance.dao.UserLoginDAO;
 
 @Stateless
 public class UserDAOBean extends AGeneralDAO<User, Integer> implements UserDAO {
+
     public UserDAOBean() {
 	super(User.class);
     }
@@ -33,70 +33,54 @@ public class UserDAOBean extends AGeneralDAO<User, Integer> implements UserDAO {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public User findByLogin(final String login) throws PeristenceOperationFailed, EntityNotFound {
+    public User findByLogin(final String login) throws NotFound {
 	UserLogin userLogin = userLoginDAO.findByName(login);
 	return userLogin.getUser();
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<User> findAll() throws PeristenceOperationFailed {
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<User> cq = cb.createQuery(entityClass);
-	    Root<User> root = cq.from(entityClass);
-	    cq.select(root);
-	    TypedQuery<User> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+    public List<User> findAll() {
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<User> cq = cb.createQuery(entityClass);
+	Root<User> root = cq.from(entityClass);
+	cq.select(root);
+	TypedQuery<User> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<User> findVisible() throws PeristenceOperationFailed {
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<User> cq = cb.createQuery(entityClass);
-	    Root<User> root = cq.from(entityClass);
-	    cq.select(root).where(cb.isFalse(root.get(User_.hidden)));
-	    TypedQuery<User> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+    public List<User> findVisible() {
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<User> cq = cb.createQuery(entityClass);
+	Root<User> root = cq.from(entityClass);
+	cq.select(root).where(cb.isFalse(root.get(User_.hidden)));
+	TypedQuery<User> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<User> findAllWhoCreatedRequest() throws PeristenceOperationFailed {
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<User> cq = cb.createQuery(entityClass);
-	    Root<Request> root = cq.from(Request.class);
-	    cq.select(root.get(Request_.createdBy))
-		    .distinct(true);
-	    TypedQuery<User> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+    public List<User> findAllWhoCreatedRequest() {
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<User> cq = cb.createQuery(entityClass);
+	Root<Request> root = cq.from(Request.class);
+	cq.select(root.get(Request_.createdBy))
+		.distinct(true);
+	TypedQuery<User> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<User> findAllWithNoGroup() throws PeristenceOperationFailed {
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<User> cq = cb.createQuery(entityClass);
-	    Root<User> root = cq.from(entityClass);
-	    cq.select(root).where(cb.isEmpty(root.get(User_.groups)));
-	    TypedQuery<User> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+    public List<User> findAllWithNoGroup() {
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<User> cq = cb.createQuery(entityClass);
+	Root<User> root = cq.from(entityClass);
+	cq.select(root).where(cb.isEmpty(root.get(User_.groups)));
+	TypedQuery<User> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
 }

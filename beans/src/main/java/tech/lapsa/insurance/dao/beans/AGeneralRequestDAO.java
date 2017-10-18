@@ -18,7 +18,6 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.insurance.dao.GeneralRequestDAO;
-import tech.lapsa.insurance.dao.PeristenceOperationFailed;
 import tech.lapsa.insurance.dao.filter.RequestFilter;
 
 public abstract class AGeneralRequestDAO<T extends Request>
@@ -31,61 +30,52 @@ public abstract class AGeneralRequestDAO<T extends Request>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByStatus(final RequestStatus status) throws PeristenceOperationFailed {
+    public List<T> findByStatus(final RequestStatus status) {
 	// SELECT e
 	// FROM InsuranceRequest e
 	// WHERE e.status = :status
 
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	    Root<T> root = cq.from(entityClass);
-	    cq.select(root)
-		    .where(
-			    cb.equal(root.get(Request_.status), status));
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	Root<T> root = cq.from(entityClass);
+	cq.select(root)
+		.where(
+			cb.equal(root.get(Request_.status), status));
 
-	    TypedQuery<T> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+	TypedQuery<T> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByFilter(RequestFilter filter) throws PeristenceOperationFailed {
+    public List<T> findByFilter(RequestFilter filter) {
 	return findByFilter(filter, true);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators)
-	    throws PeristenceOperationFailed {
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	    Root<T> root = cq.from(entityClass);
+    public List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators) {
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	Root<T> root = cq.from(entityClass);
 
-	    List<Predicate> whereOptions = new ArrayList<>();
+	List<Predicate> whereOptions = new ArrayList<>();
 
-	    prepareRequestFilterPredictates(filter, cb, root, whereOptions);
+	prepareRequestFilterPredictates(filter, cb, root, whereOptions);
 
-	    if (onlyCreators != null && onlyCreators.length > 0) {
-		List<Predicate> creatorsRestriction = new ArrayList<>();
-		if (showNoCreators)
-		    creatorsRestriction.add(cb.isNull(root.get(Request_.createdBy)));
-		for (User u : onlyCreators)
-		    creatorsRestriction.add(cb.equal(root.get(Request_.createdBy), u));
-		whereOptions.add(cb.or(creatorsRestriction.toArray(new Predicate[0])));
-	    }
-
-	    cq.select(root).where(cb.and(whereOptions.toArray(new Predicate[0])));
-
-	    TypedQuery<T> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
+	if (onlyCreators != null && onlyCreators.length > 0) {
+	    List<Predicate> creatorsRestriction = new ArrayList<>();
+	    if (showNoCreators)
+		creatorsRestriction.add(cb.isNull(root.get(Request_.createdBy)));
+	    for (User u : onlyCreators)
+		creatorsRestriction.add(cb.equal(root.get(Request_.createdBy), u));
+	    whereOptions.add(cb.or(creatorsRestriction.toArray(new Predicate[0])));
 	}
+
+	cq.select(root).where(cb.and(whereOptions.toArray(new Predicate[0])));
+
+	TypedQuery<T> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
     protected void prepareRequestFilterPredictates(RequestFilter filter, CriteriaBuilder cb, Root<T> root,
@@ -174,27 +164,23 @@ public abstract class AGeneralRequestDAO<T extends Request>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findAllOpen() throws PeristenceOperationFailed {
+    public List<T> findAllOpen() {
 	return findByStatus(RequestStatus.OPEN);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findAll() throws PeristenceOperationFailed {
+    public List<T> findAll() {
 	// SELECT e
 	// FROM InsuranceRequest e
 
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	    Root<T> root = cq.from(entityClass);
-	    cq.select(root);
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	Root<T> root = cq.from(entityClass);
+	cq.select(root);
 
-	    TypedQuery<T> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+	TypedQuery<T> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
 }

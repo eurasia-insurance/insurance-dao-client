@@ -8,6 +8,7 @@ import tech.lapsa.insurance.dao.CallbackRequestDAO;
 
 @Stateless
 public class CallbackRequestDAOBean extends AGeneralRequestDAO<CallbackRequest> implements CallbackRequestDAO {
+
     public CallbackRequestDAOBean() {
 	super(CallbackRequest.class);
     }

@@ -8,6 +8,7 @@ import tech.lapsa.insurance.dao.PolicyDAO;
 
 @Stateless
 public class PolicyDAOBean extends AGeneralDAO<Policy, Integer> implements PolicyDAO {
+
     public PolicyDAOBean() {
 	super(Policy.class);
     }

@@ -20,7 +20,6 @@ import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO;
-import tech.lapsa.insurance.dao.PeristenceOperationFailed;
 import tech.lapsa.insurance.dao.filter.RequestFilter;
 
 public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
@@ -83,29 +82,25 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByPaymentExternalId(String externalId) throws PeristenceOperationFailed {
+    public List<T> findByPaymentExternalId(String externalId) {
 	// SELECT e
 	// FROM InsuranceRequest e
 	// WHERE e.payment.paymentReference = :paymentReference
 
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	    Root<T> root = cq.from(entityClass);
-	    cq.select(root)
-		    .where(cb.equal(root.get(InsuranceRequest_.payment)
-			    .get(PaymentData_.externalId), externalId));
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	Root<T> root = cq.from(entityClass);
+	cq.select(root)
+		.where(cb.equal(root.get(InsuranceRequest_.payment)
+			.get(PaymentData_.externalId), externalId));
 
-	    TypedQuery<T> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+	TypedQuery<T> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findOpenUnpaidByPaycardOnline() throws PeristenceOperationFailed {
+    public List<T> findOpenUnpaidByPaycardOnline() {
 	// SELECT e
 	// FROM InsuranceRequest e
 	// WHERE e.status = com.lapsa.insurance.crm.RequestStatus.OPEN
@@ -114,25 +109,21 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	// AND e.payment.status = com.lapsa.insurance.crm.PaymentStatus.PENDING
 	// AND e.payment.paymentReference IS NOT NULL
 
-	try {
-	    CriteriaBuilder cb = em.getCriteriaBuilder();
-	    CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	    Root<T> root = cq.from(entityClass);
-	    cq.select(root)
-		    .where(
-			    cb.and(
-				    cb.equal(root.get(Request_.status), RequestStatus.OPEN),
-				    cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.method),
-					    PaymentMethod.PAYCARD_ONLINE),
-				    cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.status),
-					    PaymentStatus.PENDING),
-				    cb.isNotNull(
-					    root.get(InsuranceRequest_.payment).get(PaymentData_.externalId))));
+	CriteriaBuilder cb = em.getCriteriaBuilder();
+	CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	Root<T> root = cq.from(entityClass);
+	cq.select(root)
+		.where(
+			cb.and(
+				cb.equal(root.get(Request_.status), RequestStatus.OPEN),
+				cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.method),
+					PaymentMethod.PAYCARD_ONLINE),
+				cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.status),
+					PaymentStatus.PENDING),
+				cb.isNotNull(
+					root.get(InsuranceRequest_.payment).get(PaymentData_.externalId))));
 
-	    TypedQuery<T> q = em.createQuery(cq);
-	    return resultListNoCached(q);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
-	}
+	TypedQuery<T> q = em.createQuery(cq);
+	return resultListNoCached(q);
     }
 }

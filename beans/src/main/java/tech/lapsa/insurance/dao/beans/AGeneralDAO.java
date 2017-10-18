@@ -2,10 +2,12 @@ package tech.lapsa.insurance.dao.beans;
 
 import static com.lapsa.insurance.jpaUnit.InsuranceConstants.*;
 
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -16,10 +18,10 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import tech.lapsa.insurance.dao.EntityNotFound;
 import tech.lapsa.insurance.dao.GeneralDAO;
-import tech.lapsa.insurance.dao.NotPersistedException;
-import tech.lapsa.insurance.dao.PeristenceOperationFailed;
+import tech.lapsa.insurance.dao.NotFound;
+import tech.lapsa.java.commons.function.MyMaps;
+import tech.lapsa.java.commons.function.MyObjects;
 
 public abstract class AGeneralDAO<T, I> implements GeneralDAO<T, I> {
 
@@ -38,63 +40,48 @@ public abstract class AGeneralDAO<T, I> implements GeneralDAO<T, I> {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public T findById(final I id) throws EntityNotFound, PeristenceOperationFailed {
-	return findByIdHint(id, null);
+    public T findById(final I id) throws NotFound {
+	return findByIdAndHint(id, null);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public T findByIdByPassCache(final I id) throws EntityNotFound, PeristenceOperationFailed {
-	Map<String, Object> hints = new HashMap<String, Object>();
-	hints.put(HINT_JAVAX_PERSISTENCE_CACHE_RETREIVE_MODE, CacheRetrieveMode.BYPASS);
-	hints.put(HINT_JAVAX_PERSISTENCE_CACHE_STORE_MODE, CacheStoreMode.REFRESH);
-	return findByIdHint(id, hints);
+    public T findByIdByPassCache(final I id) throws NotFound {
+	return findByIdAndHint(id, MyMaps.of( //
+		HINT_JAVAX_PERSISTENCE_CACHE_RETREIVE_MODE, CacheRetrieveMode.BYPASS, //
+		HINT_JAVAX_PERSISTENCE_CACHE_STORE_MODE, CacheStoreMode.REFRESH //
+	));
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public <ET extends T> ET save(ET entity) throws PeristenceOperationFailed {
-	try {
-	    // em.flush();
-	    ET merged = em.merge(entity);
-	    em.flush();
-	    return merged;
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(
-		    String.format("Entity %1$s save failed", entityClass.getCanonicalName()), e);
-	}
+    public <ET extends T> ET save(ET entity) {
+	ET merged = em.merge(entity);
+	em.flush();
+	return merged;
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public <ET extends T> ET restore(final ET entity) throws PeristenceOperationFailed, NotPersistedException {
+    public <ET extends T> ET restore(final ET entity) throws NotFound {
 	try {
 	    ET merged = em.merge(entity);
 	    em.refresh(merged);
 	    return merged;
 	} catch (EntityNotFoundException e) {
-	    throw new NotPersistedException(
-		    String.format("Entity is not persisted %1$s", entityClass.getCanonicalName()), e);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(
-		    String.format("Entity %1$s restore failed", entityClass.getCanonicalName()), e);
+	    throw new NotFound(String.format("Entity is not persisted %1$s", entityClass.getCanonicalName()), e);
 	}
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void saveAll(List<T> entities) throws PeristenceOperationFailed {
-	try {
-	    em.flush();
-	    for (int i = 0; i < entities.size(); i++) {
-		T entity = entities.get(i);
-		entities.set(i, em.merge(entity));
-	    }
-	    em.flush();
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(
-		    String.format("Entities %1$s save failed", entityClass.getCanonicalName()), e);
-	}
+    public <ET extends T> Collection<ET> saveAll(final Collection<ET> entities) {
+	MyObjects.requireNonNull(entities, "entities");
+	Collection<ET> ret = entities.stream() //
+		.map(em::merge) //
+		.collect(Collectors.toList());
+	em.flush();
+	return ret;
     }
 
     // PROTECTED
@@ -112,21 +99,14 @@ public abstract class AGeneralDAO<T, I> implements GeneralDAO<T, I> {
 
     // PRIVATE
 
-    private T findByIdHint(final I id, Map<String, Object> hints)
-	    throws EntityNotFound, PeristenceOperationFailed {
-	try {
-	    T entity;
-	    if (hints == null)
-		entity = em.find(entityClass, id);
-	    else
-		entity = em.find(entityClass, id, hints);
-	    if (entity != null)
-		return entity;
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(
-		    String.format("Entity %1$s findById failed", entityClass.getCanonicalName()), e);
-	}
-	throw new EntityNotFound(String.format("Not found %1$s with id = '%2$s'", entityClass.getSimpleName(), id));
+    private T findByIdAndHint(final I id, Map<String, Object> hints)
+	    throws NotFound {
+	MyObjects.requireNonNull(id, "id");
+	return Optional.ofNullable( //
+		MyObjects.nonNull(hints) //
+			? em.find(entityClass, id, hints) //
+			: em.find(entityClass, id))
+		.orElseThrow(() -> new NotFound(
+			String.format("Not found %1$s with id = '%2$s'", entityClass.getSimpleName(), id)));
     }
-
 }

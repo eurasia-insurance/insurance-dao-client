@@ -12,19 +12,19 @@ import javax.persistence.criteria.Root;
 import com.lapsa.insurance.domain.crm.UserLogin;
 import com.lapsa.insurance.domain.crm.UserLogin_;
 
-import tech.lapsa.insurance.dao.EntityNotFound;
-import tech.lapsa.insurance.dao.PeristenceOperationFailed;
+import tech.lapsa.insurance.dao.NotFound;
 import tech.lapsa.insurance.dao.UserLoginDAO;
 
 @Stateless
 public class UserLoginDAOBean extends AGeneralDAO<UserLogin, Integer> implements UserLoginDAO {
+
     public UserLoginDAOBean() {
 	super(UserLogin.class);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public UserLogin findByName(final String login) throws PeristenceOperationFailed, EntityNotFound {
+    public UserLogin findByName(final String login) throws NotFound {
 	try {
 	    CriteriaBuilder cb = em.getCriteriaBuilder();
 	    CriteriaQuery<UserLogin> cq = cb.createQuery(entityClass);
@@ -35,9 +35,7 @@ public class UserLoginDAOBean extends AGeneralDAO<UserLogin, Integer> implements
 	    TypedQuery<UserLogin> q = em.createQuery(cq);
 	    return putNoCacheHints(q).getSingleResult();
 	} catch (NoResultException e) {
-	    throw new EntityNotFound(e);
-	} catch (Throwable e) {
-	    throw new PeristenceOperationFailed(e);
+	    throw new NotFound(e);
 	}
     }
 }
