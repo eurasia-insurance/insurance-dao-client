@@ -5,7 +5,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.runner.RunWith;
 
-import tech.lapsa.insurance.dao.beans.AEntityManagerDAO;
+import tech.lapsa.insurance.dao.beans.ABaseDAO;
 import tech.lapsa.lapsa.arquillian.archive.ArchiveBuilderFactory;
 
 @RunWith(Arquillian.class)
@@ -15,7 +15,7 @@ public abstract class ArquillianBaseTestCase {
     public static Archive<?> createDeploymentEAR() {
 	return ArchiveBuilderFactory.newEarBuilder() //
 		.withModule(ArchiveBuilderFactory.newEjbBuilder() //
-			.withPackageOf(AEntityManagerDAO.class) //
+			.withPackageOf(ABaseDAO.class) //
 			.withManifestFolder() //
 			.build() //
 			.dumpingTo(System.out::println)) //

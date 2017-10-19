@@ -22,7 +22,7 @@ import tech.lapsa.insurance.dao.filter.RequestFilter;
 import tech.lapsa.patterns.dao.beans.Predictates;
 
 public abstract class AGeneralRequestDAO<T extends Request>
-	extends AEntityManagerDAO<T, Integer>
+	extends ABaseDAO<T, Integer>
 	implements GeneralRequestDAO<T> {
 
     public AGeneralRequestDAO(Class<T> entityClass) {

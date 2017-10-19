@@ -16,7 +16,7 @@ import tech.lapsa.insurance.dao.UserLoginDAO;
 import tech.lapsa.patterns.dao.NotFound;
 
 @Stateless
-public class UserLoginDAOBean extends AEntityManagerDAO<UserLogin, Integer> implements UserLoginDAO {
+public class UserLoginDAOBean extends ABaseDAO<UserLogin, Integer> implements UserLoginDAO {
 
     public UserLoginDAOBean() {
 	super(UserLogin.class);

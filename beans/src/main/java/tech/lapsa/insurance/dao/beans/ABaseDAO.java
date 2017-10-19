@@ -7,9 +7,9 @@ import javax.persistence.PersistenceContext;
 
 import tech.lapsa.patterns.dao.beans.AGeneralDAO;
 
-public abstract class AEntityManagerDAO<T, I> extends AGeneralDAO<T, I> {
+public abstract class ABaseDAO<T, I> extends AGeneralDAO<T, I> {
 
-    protected AEntityManagerDAO(Class<T> entityClazz) {
+    protected ABaseDAO(Class<T> entityClazz) {
 	super(entityClazz);
     }
 
