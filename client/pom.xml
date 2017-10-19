@@ -15,12 +15,12 @@
 
 	<dependencies>
 		<!-- tech -->
-	<dependency>
-		<groupId>tech.lapsa.patterns</groupId>
-		<artifactId>patterns-dao-api</artifactId>
-		<scope>compile</scope>
-		<optional>false</optional>
-	</dependency>
+		<dependency>
+			<groupId>tech.lapsa.patterns</groupId>
+			<artifactId>patterns-dao-api</artifactId>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
 		<!-- oldies -->
 		<dependency>
 			<groupId>com.lapsa.insurance-lib</groupId>
