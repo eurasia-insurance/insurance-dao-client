@@ -51,6 +51,11 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.status), x)) //
 		.ifPresent(whereOptions::add);
 
+	// payment external Id
+	filter.optionalPaymentExternalId() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.externalId), x)) //
+		.ifPresent(whereOptions::add);
+
 	// obtaining method
 	filter.optionalObtainingMethod() //
 		.map(x -> cb.equal(root.get(InsuranceRequest_.obtaining).get(ObtainingData_.method), x)) //
