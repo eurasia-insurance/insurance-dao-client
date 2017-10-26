@@ -17,6 +17,7 @@ import com.lapsa.insurance.elements.TransactionProblem;
 import com.lapsa.insurance.elements.TransactionStatus;
 
 import tech.lapsa.java.commons.function.MyOptionals;
+import tech.lapsa.kz.taxpayer.TaxpayerNumber;
 
 public interface RequestFilter {
 
@@ -26,7 +27,11 @@ public interface RequestFilter {
 
     String getRequesterNameMask();
 
-    String getRequesterIdNumberMask();
+    TaxpayerNumber getRequesterTaxpayerNumber();
+
+    default Optional<TaxpayerNumber> optionalRequesterTaxpayerNumber() {
+	return MyOptionals.of(getRequesterTaxpayerNumber());
+    }
 
     RequestSource getRequestSource();
 
