@@ -92,9 +92,9 @@ public abstract class AGeneralRequestDAO<T extends Request>
 		filter.getRequesterNameMask()) //
 		.ifPresent(whereOptions::add);
 
-	// requester ID number mask
-	Predictates.textMatches(cb, root.get(Request_.requester).get(RequesterData_.idNumber),
-		filter.getRequesterIdNumberMask()) //
+	// requester taxpayer number
+	filter.optionalRequesterTaxpayerNumber() //
+		.map(x -> cb.equal(root.get(Request_.requester).get(RequesterData_.idNumber), x)) //
 		.ifPresent(whereOptions::add);
 
 	// request status
