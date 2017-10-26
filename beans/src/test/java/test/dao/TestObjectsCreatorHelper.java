@@ -37,6 +37,9 @@ import com.lapsa.international.phone.PhoneNumber;
 import com.lapsa.kz.country.KZArea;
 import com.lapsa.kz.country.KZCity;
 
+import tech.lapsa.kz.taxpayer.TaxpayerNumber;
+import tech.lapsa.kz.vehicle.VehicleRegNumber;
+
 public class TestObjectsCreatorHelper {
 
     private static final String LAPSA_TEST_GMAIL_COM = "lapsa.test@gmail.com";
@@ -55,7 +58,7 @@ public class TestObjectsCreatorHelper {
 	    {
 		{
 		    PolicyDriver driver = policy.addDriver(new PolicyDriver());
-		    driver.setIdNumber("123123123127");
+		    driver.setIdNumber(TaxpayerNumber.of("123123123127"));
 		    driver.setHasAnyPrivilege(false);
 		    driver.setAgeClass(InsuredAgeClass.OVER25);
 		    driver.setExpirienceClass(InsuredExpirienceClass.MORE2);
@@ -116,7 +119,7 @@ public class TestObjectsCreatorHelper {
 			VehicleCertificateData certificateData = vehicle.getCertificateData();
 			certificateData.setDateOfIssue(LocalDate.now());
 			certificateData.setNumber("123123");
-			certificateData.setRegistrationNumber("M263AP152");
+			certificateData.setRegistrationNumber(VehicleRegNumber.of("M263AP152"));
 		    }
 
 		}
