@@ -27,8 +27,8 @@
 		<patterns-dao.version>1.0</patterns-dao.version>
 		<lapsa-arquillian-test.version>1.0</lapsa-arquillian-test.version>
 		<!-- oldies -->
-		<insurance-lib.version>2.3</insurance-lib.version>
-		<insurance-jpa-unit.version>1.13</insurance-jpa-unit.version>
+		<insurance-lib.version>2.4-SNAPSHOT</insurance-lib.version>
+		<insurance-jpa-unit.version>1.14-SNAPSHOT</insurance-jpa-unit.version>
 	</properties>
 
 	<dependencyManagement>
