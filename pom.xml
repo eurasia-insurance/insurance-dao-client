@@ -24,7 +24,7 @@
 		<javax-javaee-bom.version>7.0</javax-javaee-bom.version>
 		<java-commons.version>1.0</java-commons.version>
 		<!-- tech -->
-		<patterns-dao.version>1.0</patterns-dao.version>
+		<patterns-dao.version>1.1-SNAPSHOT</patterns-dao.version>
 		<lapsa-arquillian-test.version>1.0</lapsa-arquillian-test.version>
 		<!-- oldies -->
 		<insurance-lib.version>2.4-SNAPSHOT</insurance-lib.version>
