@@ -119,7 +119,7 @@ public class TestObjectsCreatorHelper {
 			VehicleCertificateData certificateData = vehicle.getCertificateData();
 			certificateData.setDateOfIssue(LocalDate.now());
 			certificateData.setNumber("123123");
-			certificateData.setRegistrationNumber(VehicleRegNumber.of("M263AP152"));
+			certificateData.setRegistrationNumber(VehicleRegNumber.of("237blm01"));
 		    }
 
 		}
