@@ -14,10 +14,6 @@ import com.lapsa.insurance.domain.InsuranceRequest;
 import com.lapsa.insurance.domain.InsuranceRequest_;
 import com.lapsa.insurance.domain.ObtainingData_;
 import com.lapsa.insurance.domain.PaymentData_;
-import com.lapsa.insurance.domain.Request_;
-import com.lapsa.insurance.elements.PaymentMethod;
-import com.lapsa.insurance.elements.PaymentStatus;
-import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO;
 import tech.lapsa.insurance.dao.filter.RequestFilter;
@@ -39,11 +35,6 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	// request type
 	filter.optionalRequestType() //
 		.map(x -> cb.equal(root.get(InsuranceRequest_.type), x)) //
-		.ifPresent(whereOptions::add);
-
-	// payment method
-	filter.optionalPaymentMethod() //
-		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.method), x)) //
 		.ifPresent(whereOptions::add);
 
 	// payment status
@@ -95,35 +86,6 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	cq.select(root)
 		.where(cb.equal(root.get(InsuranceRequest_.payment)
 			.get(PaymentData_.externalId), externalId));
-
-	TypedQuery<T> q = em.createQuery(cq);
-	return resultListNoCached(q);
-    }
-
-    @Override
-    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findOpenUnpaidByPaycardOnline() {
-	// SELECT e
-	// FROM InsuranceRequest e
-	// WHERE e.status = com.lapsa.insurance.crm.RequestStatus.OPEN
-	// AND e.payment.method =
-	// com.lapsa.insurance.elements.PaymentMethod.PAYCARD_ONLINE
-	// AND e.payment.status = com.lapsa.insurance.crm.PaymentStatus.PENDING
-	// AND e.payment.paymentReference IS NOT NULL
-
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	Root<T> root = cq.from(entityClass);
-	cq.select(root)
-		.where(
-			cb.and(
-				cb.equal(root.get(Request_.status), RequestStatus.OPEN),
-				cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.method),
-					PaymentMethod.PAYCARD_ONLINE),
-				cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.status),
-					PaymentStatus.PENDING),
-				cb.isNotNull(
-					root.get(InsuranceRequest_.payment).get(PaymentData_.externalId))));
 
 	TypedQuery<T> q = em.createQuery(cq);
 	return resultListNoCached(q);

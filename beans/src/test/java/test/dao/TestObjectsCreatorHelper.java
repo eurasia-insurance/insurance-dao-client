@@ -25,7 +25,6 @@ import com.lapsa.insurance.elements.InsuranceClassType;
 import com.lapsa.insurance.elements.InsuredAgeClass;
 import com.lapsa.insurance.elements.InsuredExpirienceClass;
 import com.lapsa.insurance.elements.ObtainingMethod;
-import com.lapsa.insurance.elements.PaymentMethod;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.Sex;
 import com.lapsa.insurance.elements.VehicleAgeClass;
@@ -137,7 +136,6 @@ public class TestObjectsCreatorHelper {
 
 	{
 	    PaymentData payment = request.getPayment();
-	    payment.setMethod(PaymentMethod.PAYCARD_ONLINE);
 	    payment.setStatus(PaymentStatus.PENDING);
 	    payment.setExternalId("921321321321");
 	}
