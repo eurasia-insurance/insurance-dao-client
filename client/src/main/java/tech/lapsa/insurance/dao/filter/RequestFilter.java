@@ -8,7 +8,6 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.InsuranceRequestType;
 import com.lapsa.insurance.elements.ObtainingMethod;
 import com.lapsa.insurance.elements.ObtainingStatus;
-import com.lapsa.insurance.elements.PaymentMethod;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
 import com.lapsa.insurance.elements.RequestSource;
@@ -65,12 +64,6 @@ public interface RequestFilter {
 
     default Optional<InsuranceRequestType> optionalRequestType() {
 	return MyOptionals.of(getRequestType());
-    }
-
-    PaymentMethod getPaymentMethod();
-
-    default Optional<PaymentMethod> optionalPaymentMethod() {
-	return MyOptionals.of(getPaymentMethod());
     }
 
     PaymentStatus getPaymentStatus();
