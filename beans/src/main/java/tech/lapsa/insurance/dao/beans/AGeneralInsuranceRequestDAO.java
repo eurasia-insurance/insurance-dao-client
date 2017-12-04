@@ -43,8 +43,8 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 		.ifPresent(whereOptions::add);
 
 	// payment external Id
-	filter.optionalPaymentExternalId() //
-		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.externalId), x)) //
+	filter.optionalPaymentInvoiceNumber() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.invoiceNumber), x)) //
 		.ifPresent(whereOptions::add);
 
 	// obtaining method
