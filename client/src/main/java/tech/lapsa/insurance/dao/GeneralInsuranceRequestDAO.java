@@ -6,5 +6,5 @@ import com.lapsa.insurance.domain.InsuranceRequest;
 
 public interface GeneralInsuranceRequestDAO<T extends InsuranceRequest> extends GeneralRequestDAO<T> {
 
-    List<T> findByPaymentExternalId(String paymentReference);
+    List<T> findByPaymentInvoiceNumber(String paymentReference);
 }
