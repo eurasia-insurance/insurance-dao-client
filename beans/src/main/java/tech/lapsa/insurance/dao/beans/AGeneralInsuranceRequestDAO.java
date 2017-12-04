@@ -43,8 +43,8 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 		.ifPresent(whereOptions::add);
 
 	// payment external Id
-	filter.optionalPaymentExternalId() //
-		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.externalId), x)) //
+	filter.optionalPaymentInvoiceNumber() //
+		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.invoiceNumber), x)) //
 		.ifPresent(whereOptions::add);
 
 	// obtaining method
@@ -75,7 +75,7 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByPaymentExternalId(String externalId) {
+    public List<T> findByPaymentInvoiceNumber(final String invoiceNumber) {
 	// SELECT e
 	// FROM InsuranceRequest e
 	// WHERE e.payment.paymentReference = :paymentReference
@@ -85,7 +85,7 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	Root<T> root = cq.from(entityClass);
 	cq.select(root)
 		.where(cb.equal(root.get(InsuranceRequest_.payment)
-			.get(PaymentData_.externalId), externalId));
+			.get(PaymentData_.invoiceNumber), invoiceNumber));
 
 	TypedQuery<T> q = em.createQuery(cq);
 	return resultListNoCached(q);
