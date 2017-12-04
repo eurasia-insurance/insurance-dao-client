@@ -72,10 +72,10 @@ public interface RequestFilter {
 	return MyOptionals.of(getPaymentStatus());
     }
 
-    String getPaymentExternalId();
+    String getPaymentInvoiceNumber();
 
-    default Optional<String> optionalPaymentExternalId() {
-	return MyOptionals.of(getPaymentExternalId());
+    default Optional<String> optionalPaymentInvoiceNumber() {
+	return MyOptionals.of(getPaymentInvoiceNumber());
     }
 
     ObtainingMethod getObtainingMethod();
