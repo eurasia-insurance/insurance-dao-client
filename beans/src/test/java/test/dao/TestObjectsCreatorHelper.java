@@ -137,7 +137,7 @@ public class TestObjectsCreatorHelper {
 	{
 	    PaymentData payment = request.getPayment();
 	    payment.setStatus(PaymentStatus.PENDING);
-	    payment.setExternalId("921321321321");
+	    payment.setInvoiceNumber("921321321321");
 	}
 
 	{
