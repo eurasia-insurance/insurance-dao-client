@@ -88,6 +88,6 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 			.get(PaymentData_.invoiceNumber), invoiceNumber));
 
 	TypedQuery<T> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	return q.getResultList();
     }
 }

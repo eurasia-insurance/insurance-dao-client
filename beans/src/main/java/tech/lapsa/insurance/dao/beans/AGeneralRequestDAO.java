@@ -44,7 +44,7 @@ public abstract class AGeneralRequestDAO<T extends Request>
 			cb.equal(root.get(Request_.status), status));
 
 	TypedQuery<T> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	return q.getResultList();
     }
 
     @Override
@@ -76,7 +76,7 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	cq.select(root).where(cb.and(whereOptions.toArray(new Predicate[0])));
 
 	TypedQuery<T> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	return q.getResultList();
     }
 
     protected void prepareRequestFilterPredictates(RequestFilter filter, CriteriaBuilder cb, Root<T> root,
@@ -176,7 +176,7 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	cq.select(root);
 
 	TypedQuery<T> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	return q.getResultList();
     }
 
 }

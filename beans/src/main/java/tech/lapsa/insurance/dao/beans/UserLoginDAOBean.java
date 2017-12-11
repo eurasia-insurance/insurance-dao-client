@@ -31,6 +31,6 @@ public class UserLoginDAOBean extends ABaseDAO<UserLogin, Integer> implements Us
 		.where(
 			cb.equal(root.get(UserLogin_.name), login));
 	TypedQuery<UserLogin> q = em.createQuery(cq);
-	return signleResultNoCached(q);
+	return signleResult(q);
     }
 }
