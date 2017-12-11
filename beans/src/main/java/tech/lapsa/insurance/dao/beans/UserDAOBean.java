@@ -46,7 +46,7 @@ public class UserDAOBean extends ABaseDAO<User, Integer> implements UserDAO {
 	Root<User> root = cq.from(entityClass);
 	cq.select(root);
 	TypedQuery<User> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	return q.getResultList();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UserDAOBean extends ABaseDAO<User, Integer> implements UserDAO {
 	Root<User> root = cq.from(entityClass);
 	cq.select(root).where(cb.isFalse(root.get(User_.hidden)));
 	TypedQuery<User> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	return q.getResultList();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserDAOBean extends ABaseDAO<User, Integer> implements UserDAO {
 	cq.select(root.get(Request_.createdBy))
 		.distinct(true);
 	TypedQuery<User> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	return q.getResultList();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class UserDAOBean extends ABaseDAO<User, Integer> implements UserDAO {
 	Root<User> root = cq.from(entityClass);
 	cq.select(root).where(cb.isEmpty(root.get(User_.groups)));
 	TypedQuery<User> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	return q.getResultList();
     }
 
 }

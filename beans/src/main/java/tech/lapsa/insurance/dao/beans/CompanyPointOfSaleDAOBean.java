@@ -22,12 +22,12 @@ public class CompanyPointOfSaleDAOBean extends ABaseDAO<CompanyPointOfSale, Inte
 
     @Override
     public List<CompanyPointOfSale> findAll() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<CompanyPointOfSale> cq = cb.createQuery(CompanyPointOfSale.class);
-	Root<CompanyPointOfSale> root = cq.from(CompanyPointOfSale.class);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<CompanyPointOfSale> cq = cb.createQuery(CompanyPointOfSale.class);
+	final Root<CompanyPointOfSale> root = cq.from(CompanyPointOfSale.class);
 	cq.select(root);
-	TypedQuery<CompanyPointOfSale> q = em.createQuery(cq);
-	return resultListNoCached(q);
+	final TypedQuery<CompanyPointOfSale> q = em.createQuery(cq);
+	return q.getResultList();
     }
 
 }
