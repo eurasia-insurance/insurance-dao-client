@@ -18,6 +18,8 @@
 		<module>client</module>
 		<module>beans</module>
 		<module>ear</module>
+		<module>producer-local</module>
+		<module>producer-remote</module>
 	</modules>
 
 	<properties>
@@ -86,6 +88,16 @@
 				<artifactId>insurance-dao-ear</artifactId>
 				<version>${project.version}</version>
 				<type>ear</type>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>insurance-dao-producer-local</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>insurance-dao-producer-remote</artifactId>
+				<version>${project.version}</version>
 			</dependency>
 			<!-- oldies -->
 			<dependency>
