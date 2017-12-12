@@ -26,17 +26,18 @@
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
-		<dependency>
-			<groupId>tech.lapsa.lapsa</groupId>
-			<artifactId>lapsa-arquillian-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<!-- own -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>insurance-dao-client</artifactId>
 			<scope>compile</scope>
 			<optional>false</optional>
+		</dependency>
+		<!-- Payara -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.core</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<!-- JavaEE -->
 		<dependency>
@@ -55,6 +56,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- test -->
+		<dependency>
+			<groupId>tech.lapsa.lapsa</groupId>
+			<artifactId>lapsa-arquillian-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
