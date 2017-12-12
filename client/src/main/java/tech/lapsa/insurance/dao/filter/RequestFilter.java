@@ -1,5 +1,6 @@
 package tech.lapsa.insurance.dao.filter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import com.lapsa.insurance.elements.TransactionStatus;
 import tech.lapsa.java.commons.function.MyOptionals;
 import tech.lapsa.kz.taxpayer.TaxpayerNumber;
 
-public interface RequestFilter {
+public interface RequestFilter extends Serializable {
 
     // Request properties
 

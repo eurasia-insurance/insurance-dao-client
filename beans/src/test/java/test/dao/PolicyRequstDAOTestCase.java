@@ -10,14 +10,14 @@ import org.junit.Test;
 
 import com.lapsa.insurance.domain.policy.PolicyRequest;
 
-import tech.lapsa.insurance.dao.PolicyRequestDAO;
+import tech.lapsa.insurance.dao.PolicyRequestDAO.PolicyRequestDAOLocal;
 import tech.lapsa.java.commons.logging.MyLogger;
 import tech.lapsa.patterns.dao.NotFound;
 
 public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
 
     @Inject
-    private PolicyRequestDAO dao;
+    private PolicyRequestDAOLocal dao;
 
     private static MyLogger logger = MyLogger.getDefault();
 

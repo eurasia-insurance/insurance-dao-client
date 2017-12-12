@@ -2,10 +2,10 @@ package tech.lapsa.insurance.dao.beans;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,23 +17,28 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.domain.crm.UserLogin;
 import com.lapsa.insurance.domain.crm.User_;
 
-import tech.lapsa.insurance.dao.UserDAO;
-import tech.lapsa.insurance.dao.UserLoginDAO;
+import tech.lapsa.insurance.dao.UserDAO.UserDAOLocal;
+import tech.lapsa.insurance.dao.UserDAO.UserDAORemote;
+import tech.lapsa.insurance.dao.UserLoginDAO.UserLoginDAOLocal;
+import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.NotFound;
 
 @Stateless
-public class UserDAOBean extends ABaseDAO<User, Integer> implements UserDAO {
+public class UserDAOBean
+	extends ABaseDAO<User, Integer>
+	implements UserDAOLocal, UserDAORemote {
 
     public UserDAOBean() {
 	super(User.class);
     }
 
-    @Inject
-    private UserLoginDAO userLoginDAO;
+    @EJB
+    private UserLoginDAOLocal userLoginDAO;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public User getByLogin(final String login) throws NotFound {
+    public User getByLogin(final String login) throws IllegalArgumentException, NotFound {
+	MyStrings.requireNonEmpty(login, "login");
 	UserLogin userLogin = userLoginDAO.getByName(login);
 	return userLogin.getUser();
     }
