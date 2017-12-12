@@ -9,7 +9,8 @@ import com.lapsa.insurance.jpa.InsuranceConstants;
 
 import tech.lapsa.patterns.dao.beans.AGeneralDAO;
 
-public abstract class ABaseDAO<T extends Serializable, I extends Serializable> extends AGeneralDAO<T, I> {
+public abstract class ABaseDAO<T extends Serializable, I extends Serializable>
+	extends AGeneralDAO<T, I> {
 
     protected ABaseDAO(Class<T> entityClazz) {
 	super(entityClazz);
