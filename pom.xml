@@ -28,7 +28,6 @@
 		<lapsa-arquillian-test.version>1.1-SNAPSHOT</lapsa-arquillian-test.version>
 		<!-- oldies -->
 		<insurance-lib.version>2.4-SNAPSHOT</insurance-lib.version>
-		<insurance-jpa-unit.version>1.14-SNAPSHOT</insurance-jpa-unit.version>
 	</properties>
 
 	<dependencyManagement>
@@ -73,6 +72,12 @@
 				<version>${project.version}</version>
 				<type>ejb</type>
 			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>insurance-dao-ear</artifactId>
+				<version>${project.version}</version>
+				<type>ear</type>
+			</dependency>
 			<!-- oldies -->
 			<dependency>
 				<groupId>com.lapsa.insurance-lib</groupId>
@@ -80,11 +85,6 @@
 				<version>${insurance-lib.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.lapsa.insurance-lib</groupId>
-				<artifactId>insurance-jpa-unit</artifactId>
-				<version>${insurance-jpa-unit.version}</version>
 			</dependency>
 			<!-- test -->
 			<dependency>

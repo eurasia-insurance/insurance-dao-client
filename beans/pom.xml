@@ -38,13 +38,6 @@
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
-		<!-- oldies -->
-		<dependency>
-			<groupId>com.lapsa.insurance-lib</groupId>
-			<artifactId>insurance-jpa-unit</artifactId>
-			<scope>compile</scope>
-			<optional>false</optional>
-		</dependency>
 		<!-- JavaEE -->
 		<dependency>
 			<groupId>javax.enterprise</groupId>
