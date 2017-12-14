@@ -13,6 +13,7 @@ import com.lapsa.insurance.domain.crm.UserLogin_;
 
 import tech.lapsa.insurance.dao.UserLoginDAO.UserLoginDAOLocal;
 import tech.lapsa.insurance.dao.UserLoginDAO.UserLoginDAORemote;
+import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.NotFound;
 
@@ -27,8 +28,8 @@ public class UserLoginDAOBean
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public UserLogin getByName(final String name) throws IllegalArgumentException, NotFound {
-	MyStrings.requireNonEmpty(name, "name");
+    public UserLogin getByName(final String name) throws IllegalArgument, NotFound {
+	MyStrings.requireNonEmpty(IllegalArgument::new, name, "name");
 	CriteriaBuilder cb = em.getCriteriaBuilder();
 	CriteriaQuery<UserLogin> cq = cb.createQuery(entityClass);
 	Root<UserLogin> root = cq.from(entityClass);

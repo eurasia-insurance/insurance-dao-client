@@ -20,6 +20,7 @@ import com.lapsa.insurance.domain.crm.User_;
 import tech.lapsa.insurance.dao.UserDAO.UserDAOLocal;
 import tech.lapsa.insurance.dao.UserDAO.UserDAORemote;
 import tech.lapsa.insurance.dao.UserLoginDAO.UserLoginDAOLocal;
+import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.NotFound;
 
@@ -37,8 +38,8 @@ public class UserDAOBean
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public User getByLogin(final String login) throws IllegalArgumentException, NotFound {
-	MyStrings.requireNonEmpty(login, "login");
+    public User getByLogin(final String login) throws IllegalArgument, NotFound {
+	MyStrings.requireNonEmpty(IllegalArgument::new, login, "login");
 	UserLogin userLogin = userLoginDAO.getByName(login);
 	return userLogin.getUser();
     }

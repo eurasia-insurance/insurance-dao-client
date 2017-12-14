@@ -17,6 +17,8 @@ import com.lapsa.insurance.domain.PaymentData_;
 
 import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO;
 import tech.lapsa.insurance.dao.filter.RequestFilter;
+import tech.lapsa.java.commons.exceptions.IllegalArgument;
+import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.beans.Predictates;
 
 public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
@@ -75,7 +77,8 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByPaymentInvoiceNumber(final String invoiceNumber) {
+    public List<T> findByPaymentInvoiceNumber(final String invoiceNumber) throws IllegalArgument {
+	MyStrings.requireNonEmpty(IllegalArgument::new, invoiceNumber, "invoiceNumber");
 	// SELECT e
 	// FROM InsuranceRequest e
 	// WHERE e.payment.paymentReference = :paymentReference

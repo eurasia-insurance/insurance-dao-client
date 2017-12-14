@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.lapsa.insurance.domain.policy.PolicyRequest;
 
 import tech.lapsa.insurance.dao.PolicyRequestDAO.PolicyRequestDAOLocal;
+import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.java.commons.logging.MyLogger;
 import tech.lapsa.patterns.dao.NotFound;
 
@@ -24,13 +25,13 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
     private PolicyRequest entity;
 
     @Before
-    public void createEntity() {
+    public void createEntity() throws IllegalArgument {
 	logger.INFO.log("createEntity(): Create entity");
 	entity = dao.save(newPolicyRequest());
     }
 
     @Test
-    public void testCreateAndSave() throws NotFound {
+    public void testCreateAndSave() throws NotFound, IllegalArgument {
 	PolicyRequest testFind = dao.getById(entity.getId());
 	assertThat(testFind, not(nullValue()));
     }
@@ -38,7 +39,7 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
     private static final String CHANGED_REQUESTER_NAME = "NEW REQUESTER";
 
     @Test
-    public void testCreateAndSaveAndChangeAndUpdate() throws NotFound {
+    public void testCreateAndSaveAndChangeAndUpdate() throws NotFound, IllegalArgument {
 	logger.INFO.log("testCreateAndSaveAndChangeAndUpdate(): Find entity");
 	PolicyRequest testFind = dao.getById(entity.getId());
 
@@ -59,7 +60,7 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
     }
 
     @Test
-    public void testCreateAndSaveAndChangeAndReset() throws NotFound {
+    public void testCreateAndSaveAndChangeAndReset() throws NotFound, IllegalArgument {
 	logger.INFO.log("testCreateAndSaveAndChangeAndReset(): Find entity");
 	PolicyRequest testFind = dao.getById(entity.getId());
 

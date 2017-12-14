@@ -3,6 +3,7 @@ package tech.lapsa.insurance.dao.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJBException;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.TypedQuery;
@@ -19,6 +20,8 @@ import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.insurance.dao.GeneralRequestDAO;
 import tech.lapsa.insurance.dao.filter.RequestFilter;
+import tech.lapsa.java.commons.exceptions.IllegalArgument;
+import tech.lapsa.java.commons.function.MyObjects;
 import tech.lapsa.patterns.dao.beans.Predictates;
 
 public abstract class AGeneralRequestDAO<T extends Request>
@@ -31,7 +34,8 @@ public abstract class AGeneralRequestDAO<T extends Request>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByStatus(final RequestStatus status) {
+    public List<T> findByStatus(final RequestStatus status) throws IllegalArgument {
+	MyObjects.requireNonNull(IllegalArgument::new, status, "status");
 	// SELECT e
 	// FROM InsuranceRequest e
 	// WHERE e.status = :status
@@ -49,13 +53,17 @@ public abstract class AGeneralRequestDAO<T extends Request>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByFilter(RequestFilter filter) {
+    public List<T> findByFilter(final RequestFilter filter) throws IllegalArgument {
+	MyObjects.requireNonNull(IllegalArgument::new, filter, "filter");
 	return findByFilter(filter, true);
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators) {
+    public List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators)
+	    throws IllegalArgument {
+	MyObjects.requireNonNull(IllegalArgument::new, filter, "filter");
+
 	CriteriaBuilder cb = em.getCriteriaBuilder();
 	CriteriaQuery<T> cq = cb.createQuery(entityClass);
 	Root<T> root = cq.from(entityClass);
@@ -161,7 +169,12 @@ public abstract class AGeneralRequestDAO<T extends Request>
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<T> findAllOpen() {
-	return findByStatus(RequestStatus.OPEN);
+	try {
+	    return findByStatus(RequestStatus.OPEN);
+	} catch (IllegalArgument e) {
+	    // it should not happens
+	    throw new EJBException(e.getMessage());
+	}
     }
 
     @Override
