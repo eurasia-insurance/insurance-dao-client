@@ -20,7 +20,7 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.insurance.dao.GeneralRequestDAO;
-import tech.lapsa.insurance.dao.filter.RequestFilter;
+import tech.lapsa.insurance.dao.RequestFilter;
 import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.java.commons.function.MyObjects;
 import tech.lapsa.patterns.dao.beans.Predictates;
@@ -61,7 +61,8 @@ public abstract class AGeneralRequestDAO<T extends Request>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByFilter(final RequestFilter filter, final boolean showNoCreators, final User... onlyCreators)
+    public List<T> findByFilter(final RequestFilter filter, final boolean showNoCreators,
+	    final User... onlyCreators)
 	    throws IllegalArgument {
 	MyObjects.requireNonNull(IllegalArgument::new, filter, "filter");
 

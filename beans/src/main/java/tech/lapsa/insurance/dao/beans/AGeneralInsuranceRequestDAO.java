@@ -16,7 +16,7 @@ import com.lapsa.insurance.domain.ObtainingData_;
 import com.lapsa.insurance.domain.PaymentData_;
 
 import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO;
-import tech.lapsa.insurance.dao.filter.RequestFilter;
+import tech.lapsa.insurance.dao.RequestFilter;
 import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.beans.Predictates;
