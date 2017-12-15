@@ -5,7 +5,7 @@ import javax.ejb.Remote;
 
 import com.lapsa.insurance.domain.policy.PolicyRequest;
 
-public interface PolicyRequestDAO extends GeneralInsuranceRequestDAO<PolicyRequest> {
+public interface PolicyRequestDAO extends GeneralInsuranceRequestDAO<PolicyRequest>, EJBConstants {
 
     @Local
     public interface PolicyRequestDAOLocal extends PolicyRequestDAO {

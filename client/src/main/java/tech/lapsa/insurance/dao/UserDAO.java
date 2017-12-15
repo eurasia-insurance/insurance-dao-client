@@ -11,7 +11,7 @@ import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.patterns.dao.GeneralDAO;
 import tech.lapsa.patterns.dao.NotFound;
 
-public interface UserDAO extends GeneralDAO<User, Integer> {
+public interface UserDAO extends GeneralDAO<User, Integer>, EJBConstants {
 
     @Local
     public interface UserDAOLocal extends UserDAO {

@@ -5,7 +5,7 @@ import javax.ejb.Remote;
 
 import com.lapsa.insurance.domain.casco.CascoRequest;
 
-public interface CascoRequestDAO extends GeneralInsuranceRequestDAO<CascoRequest> {
+public interface CascoRequestDAO extends GeneralInsuranceRequestDAO<CascoRequest>, EJBConstants {
 
     @Local
     public interface CascoRequestDAOLocal extends CascoRequestDAO {

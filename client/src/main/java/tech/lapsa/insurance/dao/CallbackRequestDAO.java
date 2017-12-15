@@ -5,7 +5,7 @@ import javax.ejb.Remote;
 
 import com.lapsa.insurance.domain.CallbackRequest;
 
-public interface CallbackRequestDAO extends GeneralRequestDAO<CallbackRequest> {
+public interface CallbackRequestDAO extends GeneralRequestDAO<CallbackRequest>, EJBConstants {
 
     @Local
     public interface CallbackRequestDAOLocal extends CallbackRequestDAO {

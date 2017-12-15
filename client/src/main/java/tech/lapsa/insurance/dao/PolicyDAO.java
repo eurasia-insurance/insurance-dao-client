@@ -7,7 +7,7 @@ import com.lapsa.insurance.domain.policy.Policy;
 
 import tech.lapsa.patterns.dao.GeneralDAO;
 
-public interface PolicyDAO extends GeneralDAO<Policy, Integer> {
+public interface PolicyDAO extends GeneralDAO<Policy, Integer>, EJBConstants {
 
     @Local
     public interface PolicyDAOLocal extends PolicyDAO {
