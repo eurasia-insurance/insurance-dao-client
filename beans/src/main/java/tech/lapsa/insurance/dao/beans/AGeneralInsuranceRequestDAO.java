@@ -25,13 +25,14 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	extends AGeneralRequestDAO<T>
 	implements GeneralInsuranceRequestDAO<T> {
 
-    public AGeneralInsuranceRequestDAO(Class<T> entityClass) {
+    public AGeneralInsuranceRequestDAO(final Class<T> entityClass) {
 	super(entityClass);
     }
 
     @Override
-    protected void prepareRequestFilterPredictates(RequestFilter filter, CriteriaBuilder cb, Root<T> root,
-	    List<Predicate> whereOptions) {
+    protected void prepareRequestFilterPredictates(final RequestFilter filter, final CriteriaBuilder cb,
+	    final Root<T> root,
+	    final List<Predicate> whereOptions) {
 	super.prepareRequestFilterPredictates(filter, cb, root, whereOptions);
 
 	// request type
@@ -83,14 +84,14 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	// FROM InsuranceRequest e
 	// WHERE e.payment.paymentReference = :paymentReference
 
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	Root<T> root = cq.from(entityClass);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	final Root<T> root = cq.from(entityClass);
 	cq.select(root)
 		.where(cb.equal(root.get(InsuranceRequest_.payment)
 			.get(PaymentData_.invoiceNumber), invoiceNumber));
 
-	TypedQuery<T> q = em.createQuery(cq);
+	final TypedQuery<T> q = em.createQuery(cq);
 	return q.getResultList();
     }
 }

@@ -44,47 +44,47 @@ public class TestObjectsCreatorHelper {
     private static final String LAPSA_TEST_GMAIL_COM = "lapsa.test@gmail.com";
 
     public static PolicyRequest generatePolicyRequest() {
-	PolicyRequest request = new PolicyRequest();
+	final PolicyRequest request = new PolicyRequest();
 	request.setCreated(Instant.now());
 
 	{
-	    Policy policy = request.getPolicy();
+	    final Policy policy = request.getPolicy();
 	    {
-		CalculationData calculation = policy.getCalculation();
+		final CalculationData calculation = policy.getCalculation();
 		calculation.setCalculatedPremiumCost(500d);
 		calculation.setPremiumCurrency(FinCurrency.KZT);
 	    }
 	    {
 		{
-		    PolicyDriver driver = policy.addDriver(new PolicyDriver());
+		    final PolicyDriver driver = policy.addDriver(new PolicyDriver());
 		    driver.setIdNumber(TaxpayerNumber.of("123123123127"));
 		    driver.setHasAnyPrivilege(false);
 		    driver.setAgeClass(InsuredAgeClass.OVER25);
 		    driver.setExpirienceClass(InsuredExpirienceClass.MORE2);
 		    driver.setInsuranceClassType(InsuranceClassType.CLASS_3);
 		    {
-			ContactData contactData = driver.getContactData();
+			final ContactData contactData = driver.getContactData();
 			contactData.setEmail(LAPSA_TEST_GMAIL_COM);
 			contactData.setPhone(PhoneNumber.of(CountryCode.KZ, "701", "9377979"));
 		    }
 		    {
-			DriverLicenseData driverLicenseData = driver.getDriverLicenseData();
+			final DriverLicenseData driverLicenseData = driver.getDriverLicenseData();
 			driverLicenseData.setNumber("123123");
 			driverLicenseData.setDateOfIssue(LocalDate.now());
 		    }
 		    {
-			IdentityCardData identityCardData = driver.getIdentityCardData();
+			final IdentityCardData identityCardData = driver.getIdentityCardData();
 			identityCardData.setType(IdentityCardType.ID_CARD);
 			identityCardData.setDateOfIssue(LocalDate.now());
 			identityCardData.setIssuingAuthority("МВД РК");
 			identityCardData.setNumber("12321321");
 		    }
 		    {
-			OriginData originData = driver.getOriginData();
+			final OriginData originData = driver.getOriginData();
 			originData.setCountry(Country.KAZ);
 		    }
 		    {
-			PersonalData personalData = driver.getPersonalData();
+			final PersonalData personalData = driver.getPersonalData();
 			personalData.setSurename("Исаев");
 			personalData.setName("Вадим");
 			personalData.setPatronymic("Олегович");
@@ -92,7 +92,7 @@ public class TestObjectsCreatorHelper {
 			personalData.setDayOfBirth(LocalDate.now());
 		    }
 		    {
-			ResidenceData residenceData = driver.getResidenceData();
+			final ResidenceData residenceData = driver.getResidenceData();
 			residenceData.setAddress("ул. Курмангазы, 104");
 			residenceData.setCity(KZCity.ALM);
 			residenceData.setResident(true);
@@ -102,7 +102,7 @@ public class TestObjectsCreatorHelper {
 	    }
 	    {
 		{
-		    PolicyVehicle vehicle = policy.addVehicle(new PolicyVehicle());
+		    final PolicyVehicle vehicle = policy.addVehicle(new PolicyVehicle());
 		    vehicle.setCity(KZCity.ALM);
 		    vehicle.setForcedMajorCity(true);
 		    vehicle.setArea(KZArea.GALM);
@@ -115,7 +115,7 @@ public class TestObjectsCreatorHelper {
 		    vehicle.setVinCode("QWEWQEWQEWQEWQ");
 		    vehicle.setYearOfManufacture(2014);
 		    {
-			VehicleCertificateData certificateData = vehicle.getCertificateData();
+			final VehicleCertificateData certificateData = vehicle.getCertificateData();
 			certificateData.setDateOfIssue(LocalDate.now());
 			certificateData.setNumber("123123");
 			certificateData.setRegistrationNumber(VehicleRegNumber.of("237blm01"));
@@ -126,7 +126,7 @@ public class TestObjectsCreatorHelper {
 	}
 
 	{
-	    ObtainingData obtaining = request.getObtaining();
+	    final ObtainingData obtaining = request.getObtaining();
 	    obtaining.setMethod(ObtainingMethod.DELIVERY);
 	    obtaining.setDeliveryCity(KZCity.ALM);
 	    obtaining.setDeliveryDate(LocalDate.now());
@@ -135,13 +135,13 @@ public class TestObjectsCreatorHelper {
 	}
 
 	{
-	    PaymentData payment = request.getPayment();
+	    final PaymentData payment = request.getPayment();
 	    payment.setStatus(PaymentStatus.PENDING);
 	    payment.setInvoiceNumber("921321321321");
 	}
 
 	{
-	    RequesterData requester = request.getRequester();
+	    final RequesterData requester = request.getRequester();
 	    requester.setName("Исаев Вадим Олегович");
 	    requester.setEmail(LAPSA_TEST_GMAIL_COM);
 	    requester.setPhone(PhoneNumber.of(CountryCode.KZ, "701", "9377979"));

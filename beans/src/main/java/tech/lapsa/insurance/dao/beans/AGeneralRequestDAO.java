@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.lapsa.insurance.domain.BaseEntity_;
 import com.lapsa.insurance.domain.Request;
 import com.lapsa.insurance.domain.Request_;
 import com.lapsa.insurance.domain.RequesterData_;
@@ -28,7 +29,7 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	extends ABaseDAO<T, Integer>
 	implements GeneralRequestDAO<T> {
 
-    public AGeneralRequestDAO(Class<T> entityClass) {
+    public AGeneralRequestDAO(final Class<T> entityClass) {
 	super(entityClass);
     }
 
@@ -40,14 +41,14 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	// FROM InsuranceRequest e
 	// WHERE e.status = :status
 
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	Root<T> root = cq.from(entityClass);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	final Root<T> root = cq.from(entityClass);
 	cq.select(root)
 		.where(
 			cb.equal(root.get(Request_.status), status));
 
-	TypedQuery<T> q = em.createQuery(cq);
+	final TypedQuery<T> q = em.createQuery(cq);
 	return q.getResultList();
     }
 
@@ -60,40 +61,40 @@ public abstract class AGeneralRequestDAO<T extends Request>
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators)
+    public List<T> findByFilter(final RequestFilter filter, final boolean showNoCreators, final User... onlyCreators)
 	    throws IllegalArgument {
 	MyObjects.requireNonNull(IllegalArgument::new, filter, "filter");
 
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	Root<T> root = cq.from(entityClass);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	final Root<T> root = cq.from(entityClass);
 
-	List<Predicate> whereOptions = new ArrayList<>();
+	final List<Predicate> whereOptions = new ArrayList<>();
 
 	prepareRequestFilterPredictates(filter, cb, root, whereOptions);
 
 	if (onlyCreators != null && onlyCreators.length > 0) {
-	    List<Predicate> creatorsRestriction = new ArrayList<>();
+	    final List<Predicate> creatorsRestriction = new ArrayList<>();
 	    if (showNoCreators)
 		creatorsRestriction.add(cb.isNull(root.get(Request_.createdBy)));
-	    for (User u : onlyCreators)
+	    for (final User u : onlyCreators)
 		creatorsRestriction.add(cb.equal(root.get(Request_.createdBy), u));
 	    whereOptions.add(cb.or(creatorsRestriction.toArray(new Predicate[0])));
 	}
 
 	cq.select(root).where(cb.and(whereOptions.toArray(new Predicate[0])));
 
-	TypedQuery<T> q = em.createQuery(cq);
+	final TypedQuery<T> q = em.createQuery(cq);
 	return q.getResultList();
     }
 
-    protected void prepareRequestFilterPredictates(RequestFilter filter, CriteriaBuilder cb, Root<T> root,
-	    List<Predicate> whereOptions) {
+    protected void prepareRequestFilterPredictates(final RequestFilter filter, final CriteriaBuilder cb,
+	    final Root<T> root,
+	    final List<Predicate> whereOptions) {
 	// request id
-	if (filter.getId() != null && filter.getId() > 0) {
+	if (filter.getId() != null && filter.getId() > 0)
 	    whereOptions.add(
-		    cb.equal(root.get(Request_.id), filter.getId()));
-	}
+		    cb.equal(root.get(BaseEntity_.id), filter.getId()));
 
 	// requester name mask
 	Predictates.textMatches(cb, root.get(Request_.requester).get(RequesterData_.name),
@@ -171,7 +172,7 @@ public abstract class AGeneralRequestDAO<T extends Request>
     public List<T> findAllOpen() {
 	try {
 	    return findByStatus(RequestStatus.OPEN);
-	} catch (IllegalArgument e) {
+	} catch (final IllegalArgument e) {
 	    // it should not happens
 	    throw new EJBException(e.getMessage());
 	}
@@ -183,12 +184,12 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	// SELECT e
 	// FROM InsuranceRequest e
 
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	Root<T> root = cq.from(entityClass);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	final Root<T> root = cq.from(entityClass);
 	cq.select(root);
 
-	TypedQuery<T> q = em.createQuery(cq);
+	final TypedQuery<T> q = em.createQuery(cq);
 	return q.getResultList();
     }
 

@@ -32,7 +32,7 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
 
     @Test
     public void testCreateAndSave() throws NotFound, IllegalArgument {
-	PolicyRequest testFind = dao.getById(entity.getId());
+	final PolicyRequest testFind = dao.getById(entity.getId());
 	assertThat(testFind, not(nullValue()));
     }
 
@@ -53,7 +53,7 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
 	testFind = dao.save(testFind);
 
 	logger.INFO.log("testCreateAndSaveAndChangeAndUpdate(): Find another entity");
-	PolicyRequest testFind2 = dao.getById(testFind.getId());
+	final PolicyRequest testFind2 = dao.getById(testFind.getId());
 	assertThat(testFind2.getId(), equalTo(testFind.getId()));
 	assertThat(testFind2.getRequester().getName(), equalTo(testFind.getRequester().getName()));
 	assertThat(testFind2.getId(), equalTo(testFind.getId()));
@@ -73,7 +73,7 @@ public class PolicyRequstDAOTestCase extends ArquillianBaseTestCase {
 	assertThat(testFind.getRequester().getName(), equalTo(entity.getRequester().getName()));
 
 	logger.INFO.log("testCreateAndSaveAndChangeAndReset(): Find another entity");
-	PolicyRequest testFind2 = dao.getById(entity.getId());
+	final PolicyRequest testFind2 = dao.getById(entity.getId());
 	assertThat(testFind2.getRequester().getName(), equalTo(entity.getRequester().getName()));
 	assertThat(testFind2.getId(), equalTo(entity.getId()));
     }

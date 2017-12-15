@@ -30,13 +30,13 @@ public class UserLoginDAOBean
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public UserLogin getByName(final String name) throws IllegalArgument, NotFound {
 	MyStrings.requireNonEmpty(IllegalArgument::new, name, "name");
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<UserLogin> cq = cb.createQuery(entityClass);
-	Root<UserLogin> root = cq.from(entityClass);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<UserLogin> cq = cb.createQuery(entityClass);
+	final Root<UserLogin> root = cq.from(entityClass);
 	cq.select(root)
 		.where(
 			cb.equal(root.get(UserLogin_.name), name));
-	TypedQuery<UserLogin> q = em.createQuery(cq);
+	final TypedQuery<UserLogin> q = em.createQuery(cq);
 	return signleResult(q);
     }
 }
