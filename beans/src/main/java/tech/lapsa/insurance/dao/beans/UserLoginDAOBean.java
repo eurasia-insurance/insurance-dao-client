@@ -11,13 +11,14 @@ import javax.persistence.criteria.Root;
 import com.lapsa.insurance.domain.crm.UserLogin;
 import com.lapsa.insurance.domain.crm.UserLogin_;
 
+import tech.lapsa.insurance.dao.UserLoginDAO;
 import tech.lapsa.insurance.dao.UserLoginDAO.UserLoginDAOLocal;
 import tech.lapsa.insurance.dao.UserLoginDAO.UserLoginDAORemote;
 import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.NotFound;
 
-@Stateless
+@Stateless(name = UserLoginDAO.BEAN_NAME)
 public class UserLoginDAOBean
 	extends ABaseDAO<UserLogin, Integer>
 	implements UserLoginDAOLocal, UserLoginDAORemote {

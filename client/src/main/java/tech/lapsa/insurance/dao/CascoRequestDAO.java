@@ -7,6 +7,8 @@ import com.lapsa.insurance.domain.casco.CascoRequest;
 
 public interface CascoRequestDAO extends GeneralInsuranceRequestDAO<CascoRequest>, EJBConstants {
 
+    public static final String BEAN_NAME = "CascoRequestDAOBean";
+
     @Local
     public interface CascoRequestDAOLocal extends CascoRequestDAO, GeneralInsuranceRequestDAOLocal<CascoRequest> {
     }

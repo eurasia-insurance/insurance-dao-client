@@ -13,6 +13,8 @@ import tech.lapsa.patterns.dao.NotFound;
 
 public interface UserDAO extends GeneralDAO<User, Integer>, EJBConstants {
 
+    public static final String BEAN_NAME = "UserDAOBean";
+
     @Local
     public interface UserDAOLocal extends UserDAO {
     }

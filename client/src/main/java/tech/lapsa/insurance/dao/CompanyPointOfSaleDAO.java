@@ -11,6 +11,8 @@ import tech.lapsa.patterns.dao.GeneralDAO;
 
 public interface CompanyPointOfSaleDAO extends GeneralDAO<CompanyPointOfSale, Integer>, EJBConstants {
 
+    public static final String BEAN_NAME = "CompanyPointOfSaleDAOBean";
+    
     @Local
     public interface CompanyPointOfSaleDAOLocal extends CompanyPointOfSaleDAO {
     }

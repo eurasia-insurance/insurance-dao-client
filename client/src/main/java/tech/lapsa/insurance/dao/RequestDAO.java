@@ -7,6 +7,8 @@ import com.lapsa.insurance.domain.Request;
 
 public interface RequestDAO extends GeneralRequestDAO<Request>, EJBConstants {
 
+    public static final String BEAN_NAME = "RequestDAOBean";
+
     @Local
     public interface RequestDAOLocal extends RequestDAO, GeneralRequestDAOLocal<Request> {
     }

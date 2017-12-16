@@ -17,6 +17,7 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.domain.crm.UserLogin;
 import com.lapsa.insurance.domain.crm.User_;
 
+import tech.lapsa.insurance.dao.UserDAO;
 import tech.lapsa.insurance.dao.UserDAO.UserDAOLocal;
 import tech.lapsa.insurance.dao.UserDAO.UserDAORemote;
 import tech.lapsa.insurance.dao.UserLoginDAO.UserLoginDAOLocal;
@@ -24,7 +25,7 @@ import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.NotFound;
 
-@Stateless
+@Stateless(name = UserDAO.BEAN_NAME)
 public class UserDAOBean
 	extends ABaseDAO<User, Integer>
 	implements UserDAOLocal, UserDAORemote {

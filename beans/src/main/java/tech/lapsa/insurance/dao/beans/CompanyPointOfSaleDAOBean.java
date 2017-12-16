@@ -10,10 +10,11 @@ import javax.persistence.criteria.Root;
 
 import com.lapsa.insurance.domain.CompanyPointOfSale;
 
+import tech.lapsa.insurance.dao.CompanyPointOfSaleDAO;
 import tech.lapsa.insurance.dao.CompanyPointOfSaleDAO.CompanyPointOfSaleDAOLocal;
 import tech.lapsa.insurance.dao.CompanyPointOfSaleDAO.CompanyPointOfSaleDAORemote;
 
-@Stateless
+@Stateless(name = CompanyPointOfSaleDAO.BEAN_NAME)
 public class CompanyPointOfSaleDAOBean
 	extends ABaseDAO<CompanyPointOfSale, Integer>
 	implements CompanyPointOfSaleDAOLocal, CompanyPointOfSaleDAORemote {
