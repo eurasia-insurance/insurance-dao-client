@@ -11,14 +11,30 @@ import tech.lapsa.patterns.dao.GeneralDAO;
 
 public interface GeneralRequestDAO<T extends Request> extends GeneralDAO<T, Integer> {
 
-    List<T> findByStatus(RequestStatus status) throws IllegalArgument;
+    public interface GeneralRequestDAOLocal<T extends Request> extends GeneralRequestDAO<T> {
+	List<T> findByStatus(RequestStatus status) throws IllegalArgument;
 
-    List<T> findAllOpen();
+	List<T> findAllOpen();
 
-    List<T> findAll();
+	List<T> findAll();
 
-    List<T> findByFilter(RequestFilter filter) throws IllegalArgument;
+	List<T> findByFilter(RequestFilter filter) throws IllegalArgument;
 
-    List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators)
-	    throws IllegalArgument;
+	List<T> findByFilter(RequestFilter filter, boolean showNoCreators, User... onlyCreators)
+		throws IllegalArgument;
+    }
+
+    public interface GeneralRequestDAORemote<T extends Request> extends GeneralRequestDAO<T> {
+	List<T> findByStatus(int from, int limit, RequestStatus status) throws IllegalArgument;
+
+	List<T> findAllOpen(int from, int limit) throws IllegalArgument;
+
+	List<T> findAll(int from, int limit) throws IllegalArgument;
+
+	List<T> findByFilter(int from, int limit, RequestFilter filter) throws IllegalArgument;
+
+	List<T> findByFilter(int from, int limit, RequestFilter filter, boolean showNoCreators, User... onlyCreators)
+		throws IllegalArgument;
+    }
+
 }

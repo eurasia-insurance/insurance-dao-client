@@ -8,10 +8,10 @@ import com.lapsa.insurance.domain.CallbackRequest;
 public interface CallbackRequestDAO extends GeneralRequestDAO<CallbackRequest>, EJBConstants {
 
     @Local
-    public interface CallbackRequestDAOLocal extends CallbackRequestDAO {
+    public interface CallbackRequestDAOLocal extends CallbackRequestDAO, GeneralRequestDAOLocal<CallbackRequest> {
     }
 
     @Remote
-    public interface CallbackRequestDAORemote extends CallbackRequestDAO {
+    public interface CallbackRequestDAORemote extends CallbackRequestDAO, GeneralRequestDAORemote<CallbackRequest> {
     }
 }

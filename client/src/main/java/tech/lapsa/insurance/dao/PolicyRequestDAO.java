@@ -8,10 +8,10 @@ import com.lapsa.insurance.domain.policy.PolicyRequest;
 public interface PolicyRequestDAO extends GeneralInsuranceRequestDAO<PolicyRequest>, EJBConstants {
 
     @Local
-    public interface PolicyRequestDAOLocal extends PolicyRequestDAO {
+    public interface PolicyRequestDAOLocal extends PolicyRequestDAO, GeneralInsuranceRequestDAOLocal<PolicyRequest> {
     }
 
     @Remote
-    public interface PolicyRequestDAORemote extends PolicyRequestDAO {
+    public interface PolicyRequestDAORemote extends PolicyRequestDAO, GeneralInsuranceRequestDAORemote<PolicyRequest> {
     }
 }

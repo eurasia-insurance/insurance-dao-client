@@ -8,10 +8,10 @@ import com.lapsa.insurance.domain.casco.CascoRequest;
 public interface CascoRequestDAO extends GeneralInsuranceRequestDAO<CascoRequest>, EJBConstants {
 
     @Local
-    public interface CascoRequestDAOLocal extends CascoRequestDAO {
+    public interface CascoRequestDAOLocal extends CascoRequestDAO, GeneralInsuranceRequestDAOLocal<CascoRequest> {
     }
 
     @Remote
-    public interface CascoRequestDAORemote extends CascoRequestDAO {
+    public interface CascoRequestDAORemote extends CascoRequestDAO, GeneralInsuranceRequestDAORemote<CascoRequest> {
     }
 }

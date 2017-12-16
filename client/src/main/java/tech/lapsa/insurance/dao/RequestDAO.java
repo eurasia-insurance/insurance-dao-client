@@ -8,10 +8,10 @@ import com.lapsa.insurance.domain.Request;
 public interface RequestDAO extends GeneralRequestDAO<Request>, EJBConstants {
 
     @Local
-    public interface RequestDAOLocal extends RequestDAO {
+    public interface RequestDAOLocal extends RequestDAO, GeneralRequestDAOLocal<Request> {
     }
 
     @Remote
-    public interface RequestDAORemote extends RequestDAO {
+    public interface RequestDAORemote extends RequestDAO, GeneralRequestDAORemote<Request> {
     }
 }

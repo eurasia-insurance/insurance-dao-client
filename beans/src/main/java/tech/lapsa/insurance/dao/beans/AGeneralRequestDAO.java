@@ -19,15 +19,19 @@ import com.lapsa.insurance.domain.RequesterData_;
 import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.RequestStatus;
 
-import tech.lapsa.insurance.dao.GeneralRequestDAO;
+import tech.lapsa.insurance.dao.GeneralRequestDAO.GeneralRequestDAOLocal;
+import tech.lapsa.insurance.dao.GeneralRequestDAO.GeneralRequestDAORemote;
 import tech.lapsa.insurance.dao.RequestFilter;
 import tech.lapsa.java.commons.exceptions.IllegalArgument;
+import tech.lapsa.java.commons.function.MyExceptions;
 import tech.lapsa.java.commons.function.MyObjects;
 import tech.lapsa.patterns.dao.beans.Predictates;
 
 public abstract class AGeneralRequestDAO<T extends Request>
 	extends ABaseDAO<T, Integer>
-	implements GeneralRequestDAO<T> {
+	implements GeneralRequestDAOLocal<T>, GeneralRequestDAORemote<T> {
+
+    protected static final int MAX_LIMIT = 100;
 
     public AGeneralRequestDAO(final Class<T> entityClass) {
 	super(entityClass);
@@ -36,27 +40,25 @@ public abstract class AGeneralRequestDAO<T extends Request>
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<T> findByStatus(final RequestStatus status) throws IllegalArgument {
-	MyObjects.requireNonNull(IllegalArgument::new, status, "status");
-	// SELECT e
-	// FROM InsuranceRequest e
-	// WHERE e.status = :status
+	return _requireUnlimitedQuery(_queryFindByStatus(status)).getResultList();
+    }
 
-	final CriteriaBuilder cb = em.getCriteriaBuilder();
-	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	final Root<T> root = cq.from(entityClass);
-	cq.select(root)
-		.where(
-			cb.equal(root.get(Request_.status), status));
-
-	final TypedQuery<T> q = em.createQuery(cq);
-	return q.getResultList();
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findByStatus(int from, int limit, final RequestStatus status) throws IllegalArgument {
+	return _requireLimitedQuery(from, limit, _queryFindByStatus(status)).getResultList();
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<T> findByFilter(final RequestFilter filter) throws IllegalArgument {
-	MyObjects.requireNonNull(IllegalArgument::new, filter, "filter");
-	return findByFilter(filter, true);
+	return _requireUnlimitedQuery(_queryFindByFilter(filter)).getResultList();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findByFilter(int from, int limit, final RequestFilter filter) throws IllegalArgument {
+	return _requireLimitedQuery(from, limit, _queryFindByFilter(filter)).getResultList();
     }
 
     @Override
@@ -64,30 +66,43 @@ public abstract class AGeneralRequestDAO<T extends Request>
     public List<T> findByFilter(final RequestFilter filter, final boolean showNoCreators,
 	    final User... onlyCreators)
 	    throws IllegalArgument {
-	MyObjects.requireNonNull(IllegalArgument::new, filter, "filter");
-
-	final CriteriaBuilder cb = em.getCriteriaBuilder();
-	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	final Root<T> root = cq.from(entityClass);
-
-	final List<Predicate> whereOptions = new ArrayList<>();
-
-	prepareRequestFilterPredictates(filter, cb, root, whereOptions);
-
-	if (onlyCreators != null && onlyCreators.length > 0) {
-	    final List<Predicate> creatorsRestriction = new ArrayList<>();
-	    if (showNoCreators)
-		creatorsRestriction.add(cb.isNull(root.get(Request_.createdBy)));
-	    for (final User u : onlyCreators)
-		creatorsRestriction.add(cb.equal(root.get(Request_.createdBy), u));
-	    whereOptions.add(cb.or(creatorsRestriction.toArray(new Predicate[0])));
-	}
-
-	cq.select(root).where(cb.and(whereOptions.toArray(new Predicate[0])));
-
-	final TypedQuery<T> q = em.createQuery(cq);
-	return q.getResultList();
+	return _requireUnlimitedQuery(_queryFindByFilter(filter, showNoCreators, onlyCreators)).getResultList();
     }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findByFilter(int from, int limit, final RequestFilter filter, final boolean showNoCreators,
+	    final User... onlyCreators)
+	    throws IllegalArgument {
+	return _requireLimitedQuery(from, limit, _queryFindByFilter(filter, showNoCreators, onlyCreators))
+		.getResultList();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findAllOpen() {
+	return _requireUnlimitedQuery(_queryFindAllOpen()).getResultList();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findAllOpen(int from, int limit) throws IllegalArgument {
+	return _requireLimitedQuery(from, limit, _queryFindAllOpen()).getResultList();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findAll() {
+	return _requireUnlimitedQuery(_queryFindAll()).getResultList();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findAll(int from, int limit) throws IllegalArgument {
+	return _requireLimitedQuery(from, limit, _queryFindAll()).getResultList();
+    }
+
+    // preparer
 
     protected void prepareRequestFilterPredictates(final RequestFilter filter, final CriteriaBuilder cb,
 	    final Root<T> root,
@@ -168,30 +183,88 @@ public abstract class AGeneralRequestDAO<T extends Request>
 		    .add(cb.equal(root.get(Request_.closedBy), filter.getClosedBy()));
     }
 
-    @Override
-    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findAllOpen() {
+    // queries
+
+    protected TypedQuery<T> _queryFindAllOpen() {
 	try {
-	    return findByStatus(RequestStatus.OPEN);
-	} catch (final IllegalArgument e) {
+	    return _queryFindByStatus(RequestStatus.OPEN);
+	} catch (IllegalArgument e) {
 	    // it should not happens
 	    throw new EJBException(e.getMessage());
 	}
     }
 
-    @Override
-    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findAll() {
-	// SELECT e
-	// FROM InsuranceRequest e
-
+    protected TypedQuery<T> _queryFindAll() {
 	final CriteriaBuilder cb = em.getCriteriaBuilder();
 	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
 	final Root<T> root = cq.from(entityClass);
 	cq.select(root);
+	final TypedQuery<T> q = em.createQuery(cq);
+	return q;
+    }
+
+    protected TypedQuery<T> _queryFindByStatus(final RequestStatus status) throws IllegalArgument {
+	MyObjects.requireNonNull(IllegalArgument::new, status, "status");
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	final Root<T> root = cq.from(entityClass);
+	cq.select(root)
+		.where(
+			cb.equal(root.get(Request_.status), status));
+
+	final TypedQuery<T> q = em.createQuery(cq).setMaxResults(MAX_LIMIT);
+	return q;
+    }
+
+    private TypedQuery<T> _queryFindByFilter(RequestFilter filter) throws IllegalArgument {
+	return _queryFindByFilter(filter, true);
+    }
+
+    protected TypedQuery<T> _queryFindByFilter(final RequestFilter filter, final boolean showNoCreators,
+	    final User... onlyCreators) throws IllegalArgument {
+	MyObjects.requireNonNull(IllegalArgument::new, filter, "filter");
+
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	final Root<T> root = cq.from(entityClass);
+
+	final List<Predicate> whereOptions = new ArrayList<>();
+
+	prepareRequestFilterPredictates(filter, cb, root, whereOptions);
+
+	if (onlyCreators != null && onlyCreators.length > 0) {
+	    final List<Predicate> creatorsRestriction = new ArrayList<>();
+	    if (showNoCreators)
+		creatorsRestriction.add(cb.isNull(root.get(Request_.createdBy)));
+	    for (final User u : onlyCreators)
+		creatorsRestriction.add(cb.equal(root.get(Request_.createdBy), u));
+	    whereOptions.add(cb.or(creatorsRestriction.toArray(new Predicate[0])));
+	}
+
+	cq.select(root).where(cb.and(whereOptions.toArray(new Predicate[0])));
 
 	final TypedQuery<T> q = em.createQuery(cq);
-	return q.getResultList();
+	return q;
+    }
+
+    // limits
+
+    protected TypedQuery<T> _requireUnlimitedQuery(final TypedQuery<T> query) {
+	return query.setFirstResult(0).setMaxResults(Integer.MAX_VALUE);
+    }
+
+    protected TypedQuery<T> _requireLimitedQuery(final int from, final int limit, final TypedQuery<T> query)
+	    throws IllegalArgument {
+	if (from < 0)
+	    throw MyExceptions.format(IllegalArgument::new,
+		    "Invalid from value %1$s. It should be greater than zero", from);
+
+	if (limit <= 0 || limit > MAX_LIMIT)
+	    throw MyExceptions.format(IllegalArgument::new,
+		    "Invalid limit value %1$s. It should be greater than zero and not larget than maximum %2$s", limit,
+		    MAX_LIMIT);
+
+	return query.setFirstResult(from).setMaxResults(limit);
     }
 
 }
