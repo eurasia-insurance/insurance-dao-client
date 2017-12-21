@@ -38,8 +38,6 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	extends ABaseDAO<T, Integer>
 	implements GeneralRequestDAOLocal<T>, GeneralRequestDAORemote<T> {
 
-    protected static final int MAX_LIMIT = 100;
-
     public AGeneralRequestDAO(final Class<T> entityClass) {
 	super(entityClass);
     }
@@ -650,10 +648,9 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	if (from < 0)
 	    throw MyExceptions.illegalArgumentFormat("Invalid from value %1$s. It should be greater than zero", from);
 
-	if (limit <= 0 || limit > MAX_LIMIT)
+	if (limit <= 0)
 	    throw MyExceptions.illegalArgumentFormat(
-		    "Invalid limit value %1$s. It should be greater than zero and not larget than maximum %2$s", limit,
-		    MAX_LIMIT);
+		    "Invalid limit value %1$s. It should be greater than zero", limit);
 
 	return query.setFirstResult(from).setMaxResults(limit);
     }

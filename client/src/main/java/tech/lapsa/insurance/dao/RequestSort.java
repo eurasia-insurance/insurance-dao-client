@@ -8,6 +8,8 @@ public class RequestSort implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static final RequestSort DEFAULT_SORT = new RequestSort(RequestSortField.CREATED, RequestSortOrder.DESC);
+
     public static enum RequestSortField {
 	ID, CREATED, UPDATED, REQUESTER_NAME, REQUESTER_ID_NUMBER, REQUESTER_PHONE;
     }
