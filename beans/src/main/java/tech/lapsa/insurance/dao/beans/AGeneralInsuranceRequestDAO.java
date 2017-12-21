@@ -15,21 +15,40 @@ import com.lapsa.insurance.domain.InsuranceRequest_;
 import com.lapsa.insurance.domain.ObtainingData_;
 import com.lapsa.insurance.domain.PaymentData_;
 
-import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO;
-import tech.lapsa.insurance.dao.filter.RequestFilter;
+import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO.GeneralInsuranceRequestDAOLocal;
+import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO.GeneralInsuranceRequestDAORemote;
+import tech.lapsa.insurance.dao.RequestFilter;
+import tech.lapsa.java.commons.exceptions.IllegalArgument;
+import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.beans.Predictates;
 
 public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	extends AGeneralRequestDAO<T>
-	implements GeneralInsuranceRequestDAO<T> {
+	implements GeneralInsuranceRequestDAOLocal<T>, GeneralInsuranceRequestDAORemote<T> {
 
-    public AGeneralInsuranceRequestDAO(Class<T> entityClass) {
+    public AGeneralInsuranceRequestDAO(final Class<T> entityClass) {
 	super(entityClass);
     }
 
     @Override
-    protected void prepareRequestFilterPredictates(RequestFilter filter, CriteriaBuilder cb, Root<T> root,
-	    List<Predicate> whereOptions) {
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findByPaymentInvoiceNumber(final String invoiceNumber) throws IllegalArgument {
+	return _requireUnlimitedQuery(_findByPaymentInvoiceNumber(invoiceNumber)).getResultList();
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<T> findByPaymentInvoiceNumber(final int from, final int limit, final String invoiceNumber)
+	    throws IllegalArgument {
+	return _requireLimitedQuery(from, limit, _findByPaymentInvoiceNumber(invoiceNumber)).getResultList();
+    }
+
+    // preparer
+
+    @Override
+    protected void prepareRequestFilterPredictates(final RequestFilter filter, final CriteriaBuilder cb,
+	    final Root<T> root,
+	    final List<Predicate> whereOptions) {
 	super.prepareRequestFilterPredictates(filter, cb, root, whereOptions);
 
 	// request type
@@ -73,21 +92,18 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 		.ifPresent(whereOptions::add);
     }
 
-    @Override
-    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<T> findByPaymentInvoiceNumber(final String invoiceNumber) {
-	// SELECT e
-	// FROM InsuranceRequest e
-	// WHERE e.payment.paymentReference = :paymentReference
+    // queries
 
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<T> cq = cb.createQuery(entityClass);
-	Root<T> root = cq.from(entityClass);
+    protected TypedQuery<T> _findByPaymentInvoiceNumber(final String invoiceNumber) throws IllegalArgument {
+	MyStrings.requireNonEmpty(IllegalArgument::new, invoiceNumber, "invoiceNumber");
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<T> cq = cb.createQuery(entityClass);
+	final Root<T> root = cq.from(entityClass);
 	cq.select(root)
 		.where(cb.equal(root.get(InsuranceRequest_.payment)
 			.get(PaymentData_.invoiceNumber), invoiceNumber));
 
-	TypedQuery<T> q = em.createQuery(cq);
-	return q.getResultList();
+	final TypedQuery<T> q = em.createQuery(cq);
+	return q;
     }
 }

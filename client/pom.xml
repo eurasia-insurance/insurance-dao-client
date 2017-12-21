@@ -26,16 +26,6 @@
 			<artifactId>insurance-domain</artifactId>
 			<scope>compile</scope>
 			<optional>false</optional>
-			<exclusions>
-				<exclusion>
-					<groupId>tech.lapsa.javax</groupId>
-					<artifactId>javax-validation-commons</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>tech.lapsa.insurance</groupId>
-					<artifactId>insurance-validation</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<!-- Payara -->
 		<dependency>

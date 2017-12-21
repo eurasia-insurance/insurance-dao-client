@@ -7,10 +7,13 @@ import javax.ejb.Remote;
 
 import com.lapsa.insurance.domain.crm.User;
 
+import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.patterns.dao.GeneralDAO;
 import tech.lapsa.patterns.dao.NotFound;
 
-public interface UserDAO extends GeneralDAO<User, Integer> {
+public interface UserDAO extends GeneralDAO<User, Integer>, EJBConstants {
+
+    public static final String BEAN_NAME = "UserDAOBean";
 
     @Local
     public interface UserDAOLocal extends UserDAO {
@@ -20,7 +23,7 @@ public interface UserDAO extends GeneralDAO<User, Integer> {
     public interface UserDAORemote extends UserDAO {
     }
 
-    User getByLogin(String login) throws IllegalArgumentException, NotFound;
+    User getByLogin(String login) throws IllegalArgument, NotFound;
 
     List<User> findAll();
 

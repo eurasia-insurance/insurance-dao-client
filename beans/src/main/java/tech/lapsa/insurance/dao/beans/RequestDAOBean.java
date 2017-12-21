@@ -4,10 +4,11 @@ import javax.ejb.Stateless;
 
 import com.lapsa.insurance.domain.Request;
 
+import tech.lapsa.insurance.dao.RequestDAO;
 import tech.lapsa.insurance.dao.RequestDAO.RequestDAOLocal;
 import tech.lapsa.insurance.dao.RequestDAO.RequestDAORemote;
 
-@Stateless
+@Stateless(name = RequestDAO.BEAN_NAME)
 public class RequestDAOBean
 	extends AGeneralRequestDAO<Request>
 	implements RequestDAOLocal, RequestDAORemote {

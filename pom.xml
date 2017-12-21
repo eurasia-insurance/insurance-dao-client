@@ -17,7 +17,7 @@
 	<modules>
 		<module>client</module>
 		<module>beans</module>
-		<module>ear</module>
+		<module>app</module>
 	</modules>
 
 	<properties>
@@ -83,7 +83,7 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>insurance-dao-ear</artifactId>
+				<artifactId>insurance-dao-app</artifactId>
 				<version>${project.version}</version>
 				<type>ear</type>
 			</dependency>

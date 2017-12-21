@@ -12,7 +12,7 @@ import tech.lapsa.patterns.dao.beans.AGeneralDAO;
 public abstract class ABaseDAO<T extends Serializable, I extends Serializable>
 	extends AGeneralDAO<T, I> {
 
-    protected ABaseDAO(Class<T> entityClazz) {
+    protected ABaseDAO(final Class<T> entityClazz) {
 	super(entityClazz);
     }
 

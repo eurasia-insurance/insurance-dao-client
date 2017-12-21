@@ -17,13 +17,15 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.domain.crm.UserLogin;
 import com.lapsa.insurance.domain.crm.User_;
 
+import tech.lapsa.insurance.dao.UserDAO;
 import tech.lapsa.insurance.dao.UserDAO.UserDAOLocal;
 import tech.lapsa.insurance.dao.UserDAO.UserDAORemote;
 import tech.lapsa.insurance.dao.UserLoginDAO.UserLoginDAOLocal;
+import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.java.commons.function.MyStrings;
 import tech.lapsa.patterns.dao.NotFound;
 
-@Stateless
+@Stateless(name = UserDAO.BEAN_NAME)
 public class UserDAOBean
 	extends ABaseDAO<User, Integer>
 	implements UserDAOLocal, UserDAORemote {
@@ -37,54 +39,54 @@ public class UserDAOBean
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public User getByLogin(final String login) throws IllegalArgumentException, NotFound {
-	MyStrings.requireNonEmpty(login, "login");
-	UserLogin userLogin = userLoginDAO.getByName(login);
+    public User getByLogin(final String login) throws IllegalArgument, NotFound {
+	MyStrings.requireNonEmpty(IllegalArgument::new, login, "login");
+	final UserLogin userLogin = userLoginDAO.getByName(login);
 	return userLogin.getUser();
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<User> findAll() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<User> cq = cb.createQuery(entityClass);
-	Root<User> root = cq.from(entityClass);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<User> cq = cb.createQuery(entityClass);
+	final Root<User> root = cq.from(entityClass);
 	cq.select(root);
-	TypedQuery<User> q = em.createQuery(cq);
+	final TypedQuery<User> q = em.createQuery(cq);
 	return q.getResultList();
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<User> findVisible() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<User> cq = cb.createQuery(entityClass);
-	Root<User> root = cq.from(entityClass);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<User> cq = cb.createQuery(entityClass);
+	final Root<User> root = cq.from(entityClass);
 	cq.select(root).where(cb.isFalse(root.get(User_.hidden)));
-	TypedQuery<User> q = em.createQuery(cq);
+	final TypedQuery<User> q = em.createQuery(cq);
 	return q.getResultList();
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<User> findAllWhoCreatedRequest() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<User> cq = cb.createQuery(entityClass);
-	Root<Request> root = cq.from(Request.class);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<User> cq = cb.createQuery(entityClass);
+	final Root<Request> root = cq.from(Request.class);
 	cq.select(root.get(Request_.createdBy))
 		.distinct(true);
-	TypedQuery<User> q = em.createQuery(cq);
+	final TypedQuery<User> q = em.createQuery(cq);
 	return q.getResultList();
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<User> findAllWithNoGroup() {
-	CriteriaBuilder cb = em.getCriteriaBuilder();
-	CriteriaQuery<User> cq = cb.createQuery(entityClass);
-	Root<User> root = cq.from(entityClass);
+	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	final CriteriaQuery<User> cq = cb.createQuery(entityClass);
+	final Root<User> root = cq.from(entityClass);
 	cq.select(root).where(cb.isEmpty(root.get(User_.groups)));
-	TypedQuery<User> q = em.createQuery(cq);
+	final TypedQuery<User> q = em.createQuery(cq);
 	return q.getResultList();
     }
 
