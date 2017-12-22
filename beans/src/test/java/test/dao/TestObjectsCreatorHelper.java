@@ -2,8 +2,8 @@ package test.dao;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Currency;
 
-import com.lapsa.fin.FinCurrency;
 import com.lapsa.insurance.domain.CalculationData;
 import com.lapsa.insurance.domain.ContactData;
 import com.lapsa.insurance.domain.DriverLicenseData;
@@ -51,8 +51,8 @@ public class TestObjectsCreatorHelper {
 	    final Policy policy = request.getPolicy();
 	    {
 		final CalculationData calculation = policy.getCalculation();
-		calculation.setCalculatedPremiumCost(500d);
-		calculation.setPremiumCurrency(FinCurrency.KZT);
+		calculation.setAmount(500d);
+		calculation.setCurrency(Currency.getInstance("KZT"));
 	    }
 	    {
 		{
