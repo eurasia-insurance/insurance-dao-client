@@ -8,7 +8,6 @@ import com.lapsa.insurance.domain.CalculationData;
 import com.lapsa.insurance.domain.ContactData;
 import com.lapsa.insurance.domain.DriverLicenseData;
 import com.lapsa.insurance.domain.IdentityCardData;
-import com.lapsa.insurance.domain.ObtainingData;
 import com.lapsa.insurance.domain.OriginData;
 import com.lapsa.insurance.domain.PaymentData;
 import com.lapsa.insurance.domain.PersonalData;
@@ -19,12 +18,10 @@ import com.lapsa.insurance.domain.policy.Policy;
 import com.lapsa.insurance.domain.policy.PolicyDriver;
 import com.lapsa.insurance.domain.policy.PolicyRequest;
 import com.lapsa.insurance.domain.policy.PolicyVehicle;
-import com.lapsa.insurance.elements.DeliveryTimeSlot;
 import com.lapsa.insurance.elements.IdentityCardType;
 import com.lapsa.insurance.elements.InsuranceClassType;
 import com.lapsa.insurance.elements.InsuredAgeClass;
 import com.lapsa.insurance.elements.InsuredExpirienceClass;
-import com.lapsa.insurance.elements.ObtainingMethod;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.Sex;
 import com.lapsa.insurance.elements.VehicleAgeClass;
@@ -123,15 +120,6 @@ public class TestObjectsCreatorHelper {
 
 		}
 	    }
-	}
-
-	{
-	    final ObtainingData obtaining = request.getObtaining();
-	    obtaining.setMethod(ObtainingMethod.DELIVERY);
-	    obtaining.setDeliveryCity(KZCity.ALM);
-	    obtaining.setDeliveryDate(LocalDate.now());
-	    obtaining.setDeliveryTime(DeliveryTimeSlot.DURING_THE_DAY);
-	    obtaining.setDeliveryAddress("ул. Желтоксан, 59");
 	}
 
 	{
