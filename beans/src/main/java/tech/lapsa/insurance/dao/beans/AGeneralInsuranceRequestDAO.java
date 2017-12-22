@@ -12,7 +12,6 @@ import javax.persistence.criteria.Root;
 
 import com.lapsa.insurance.domain.InsuranceRequest;
 import com.lapsa.insurance.domain.InsuranceRequest_;
-import com.lapsa.insurance.domain.ObtainingData_;
 import com.lapsa.insurance.domain.PaymentData_;
 
 import tech.lapsa.insurance.dao.GeneralInsuranceRequestDAO.GeneralInsuranceRequestDAOLocal;
@@ -64,16 +63,6 @@ public abstract class AGeneralInsuranceRequestDAO<T extends InsuranceRequest>
 	// payment external Id
 	filter.optionalPaymentInvoiceNumber() //
 		.map(x -> cb.equal(root.get(InsuranceRequest_.payment).get(PaymentData_.invoiceNumber), x)) //
-		.ifPresent(whereOptions::add);
-
-	// obtaining method
-	filter.optionalObtainingMethod() //
-		.map(x -> cb.equal(root.get(InsuranceRequest_.obtaining).get(ObtainingData_.method), x)) //
-		.ifPresent(whereOptions::add);
-
-	// obtaining status
-	filter.optionalObtainingStatus() //
-		.map(x -> cb.equal(root.get(InsuranceRequest_.obtaining).get(ObtainingData_.status), x)) //
 		.ifPresent(whereOptions::add);
 
 	// transaction status

@@ -7,8 +7,6 @@ import java.util.Optional;
 
 import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.InsuranceRequestType;
-import com.lapsa.insurance.elements.ObtainingMethod;
-import com.lapsa.insurance.elements.ObtainingStatus;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
 import com.lapsa.insurance.elements.RequestSource;
@@ -47,8 +45,6 @@ public class RequestFilter implements Serializable {
     private InsuranceRequestType insuranceRequestType;
     private PaymentStatus paymentStatus;
     private String paymentInvoiceNumber;
-    private ObtainingMethod obtainingMethod;
-    private ObtainingStatus obtainingStatus;
     private TransactionStatus transactionStatus;
     private String agreementNumberMask;
     private TransactionProblem transactionProblem;
@@ -172,31 +168,6 @@ public class RequestFilter implements Serializable {
 
     public void setPaymentInvoiceNumber(String paymentInvoiceNumber) {
 	this.paymentInvoiceNumber = paymentInvoiceNumber;
-    }
-
-    public ObtainingMethod getObtainingMethod() {
-	return obtainingMethod;
-    }
-
-    public Optional<ObtainingMethod> optionalObtainingMethod() {
-	return MyOptionals.of(getObtainingMethod());
-    }
-
-    public void setObtainingMethod(ObtainingMethod obtainingMethod) {
-	this.obtainingMethod = obtainingMethod;
-    }
-
-    public ObtainingStatus getObtainingStatus() {
-	return obtainingStatus;
-    }
-
-    public Optional<ObtainingStatus> optionalObtainingStatus() {
-	return MyOptionals.of(getObtainingStatus());
-    }
-
-
-    public void setObtainingStatus(ObtainingStatus obtainingStatus) {
-	this.obtainingStatus = obtainingStatus;
     }
 
     public TransactionStatus getTransactionStatus() {
