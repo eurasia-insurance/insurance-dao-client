@@ -27,9 +27,8 @@
 		<java-commons.version>1.1-SNAPSHOT</java-commons.version>
 		<!-- tech -->
 		<patterns-dao.version>1.1-SNAPSHOT</patterns-dao.version>
+		<insurance-domain.version>2.4-SNAPSHOT</insurance-domain.version>
 		<lapsa-arquillian-test.version>1.1-SNAPSHOT</lapsa-arquillian-test.version>
-		<!-- oldies -->
-		<insurance-lib.version>2.4-SNAPSHOT</insurance-lib.version>
 	</properties>
 
 	<dependencyManagement>
@@ -69,6 +68,11 @@
 				<artifactId>lapsa-arquillian-test</artifactId>
 				<version>${lapsa-arquillian-test.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>tech.lapsa.insurance</groupId>
+				<artifactId>insurance-domain</artifactId>
+				<version>${insurance-domain.version}</version>
+			</dependency>
 			<!-- own -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -86,14 +90,6 @@
 				<artifactId>insurance-dao-app</artifactId>
 				<version>${project.version}</version>
 				<type>ear</type>
-			</dependency>
-			<!-- oldies -->
-			<dependency>
-				<groupId>com.lapsa.insurance-lib</groupId>
-				<artifactId>insurance-root</artifactId>
-				<version>${insurance-lib.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
 			</dependency>
 			<!-- test -->
 			<dependency>
