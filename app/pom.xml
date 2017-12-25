@@ -10,7 +10,7 @@
 	<artifactId>insurance-dao-app</artifactId>
 	<packaging>ear</packaging>
 
-	<name>Insurance Lib : DAO : EE Application</name>
+	<name>Insurance Lib : DAO : EAR</name>
 
 	<dependencies>
 		<dependency>
