@@ -15,7 +15,7 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.lapsa.insurance.domain.BaseEntity_;
+import com.lapsa.insurance.domain.EntitySuperclass_;
 import com.lapsa.insurance.domain.Request;
 import com.lapsa.insurance.domain.Request_;
 import com.lapsa.insurance.domain.RequesterData_;
@@ -259,7 +259,7 @@ public abstract class AGeneralRequestDAO<T extends Request>
 	// request id
 	if (filter.getId() != null && filter.getId() > 0)
 	    whereOptions.add(
-		    cb.equal(root.get(BaseEntity_.id), filter.getId()));
+		    cb.equal(root.get(EntitySuperclass_.id), filter.getId()));
 
 	// requester name mask
 	Predictates.textMatches(cb, root.get(Request_.requester).get(RequesterData_.name),
