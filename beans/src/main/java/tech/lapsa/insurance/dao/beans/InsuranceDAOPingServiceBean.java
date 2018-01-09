@@ -26,6 +26,7 @@ public class InsuranceDAOPingServiceBean implements InsuranceDAOPingServiceLocal
     @PersistenceContext(unitName = InsuranceConstants.PERSISTENCE_UNIT_NAME)
     protected EntityManager em;
 
+    //TODO REFACT Use constants from jpa-commons
     private static final String HINT_JAVAX_PERSISTENCE_CACHE_STORE_MODE = "javax.persistence.cache.storeMode";
     private static final String HINT_JAVAX_PERSISTENCE_CACHE_RETREIVE_MODE = "javax.persistence.cache.retreiveMode";
 
