@@ -13,15 +13,15 @@ import javax.persistence.PersistenceContext;
 import com.lapsa.insurance.jpa.InsuranceConstants;
 import com.lapsa.insurance.jpa.InsuranceVersion;
 
-import tech.lapsa.insurance.dao.PingService;
-import tech.lapsa.insurance.dao.PingService.PingServiceLocal;
-import tech.lapsa.insurance.dao.PingService.PingServiceRemote;
+import tech.lapsa.insurance.dao.InsuranceDAOPingService;
+import tech.lapsa.insurance.dao.InsuranceDAOPingService.InsuranceDAOPingServiceLocal;
+import tech.lapsa.insurance.dao.InsuranceDAOPingService.InsuranceDAOPingServiceRemote;
 import tech.lapsa.java.commons.exceptions.IllegalState;
 import tech.lapsa.java.commons.function.MyExceptions;
 import tech.lapsa.java.commons.function.MyMaps;
 
-@Stateless(name = PingService.BEAN_NAME)
-public class PingServiceBean implements PingServiceLocal, PingServiceRemote {
+@Stateless(name = InsuranceDAOPingService.BEAN_NAME)
+public class InsuranceDAOPingServiceBean implements InsuranceDAOPingServiceLocal, InsuranceDAOPingServiceRemote {
 
     @PersistenceContext(unitName = InsuranceConstants.PERSISTENCE_UNIT_NAME)
     protected EntityManager em;

@@ -5,16 +5,16 @@ import javax.ejb.Remote;
 
 import tech.lapsa.java.commons.exceptions.IllegalState;
 
-public interface PingService extends EJBConstants {
+public interface InsuranceDAOPingService extends EJBConstants {
 
-    public static final String BEAN_NAME = "PingServiceBean";
+    public static final String BEAN_NAME = "InsuranceDAOPingServiceBean";
 
     @Local
-    public interface PingServiceLocal extends PingService {
+    public interface InsuranceDAOPingServiceLocal extends InsuranceDAOPingService {
     }
 
     @Remote
-    public interface PingServiceRemote extends PingService {
+    public interface InsuranceDAOPingServiceRemote extends InsuranceDAOPingService {
     }
 
     void ping() throws IllegalState;
