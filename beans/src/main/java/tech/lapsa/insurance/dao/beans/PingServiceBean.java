@@ -3,6 +3,8 @@ package tech.lapsa.insurance.dao.beans;
 import java.util.Map;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.CacheRetrieveMode;
 import javax.persistence.CacheStoreMode;
 import javax.persistence.EntityManager;
@@ -32,6 +34,7 @@ public class PingServiceBean implements PingServiceLocal, PingServiceRemote {
 	    HINT_JAVAX_PERSISTENCE_CACHE_STORE_MODE, CacheStoreMode.REFRESH);
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public void ping() throws IllegalState {
 	try {
 	    em.find(InsuranceVersion.class, 1, NO_CACHE_PROPS);
