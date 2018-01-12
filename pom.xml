@@ -64,7 +64,6 @@
 			<scope>compile</scope>
 			<optional>false</optional>
 		</dependency>
-		<!-- oldies -->
 		<dependency>
 			<groupId>tech.lapsa.insurance</groupId>
 			<artifactId>insurance-domain</artifactId>
