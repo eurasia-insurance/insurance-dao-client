@@ -8,27 +8,19 @@
 	</parent>
 
 	<groupId>tech.lapsa.insurance</groupId>
-	<artifactId>insurance-dao-root</artifactId>
+	<artifactId>insurance-dao-client</artifactId>
 	<version>1.2-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
-	<name>Insurance Lib : DAO</name>
-
-	<modules>
-		<module>client</module>
-		<module>beans</module>
-		<module>app</module>
-	</modules>
+	<name>Insurance Lib : DAO : EJB-client</name>
 
 	<properties>
 		<!-- BOMS -->
 		<javax-javaee-bom.version>7.0a</javax-javaee-bom.version>
 		<payara-bom.version>4.1.2-2</payara-bom.version>
-		<java-commons.version>1.2-SNAPSHOT</java-commons.version>
 		<!-- tech -->
 		<patterns-dao.version>1.1</patterns-dao.version>
 		<insurance-domain.version>2.4</insurance-domain.version>
-		<lapsa-arquillian-test.version>1.1</lapsa-arquillian-test.version>
 	</properties>
 
 	<dependencyManagement>
@@ -49,13 +41,6 @@
 				<type>pom</type>
 			</dependency>
 			<dependency>
-				<groupId>tech.lapsa.java</groupId>
-				<artifactId>java-commons-root</artifactId>
-				<version>${java-commons.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
 				<groupId>tech.lapsa.patterns</groupId>
 				<artifactId>patterns-dao-root</artifactId>
 				<version>${patterns-dao.version}</version>
@@ -64,56 +49,51 @@
 			</dependency>
 			<!-- tech -->
 			<dependency>
-				<groupId>tech.lapsa.lapsa</groupId>
-				<artifactId>lapsa-arquillian-test</artifactId>
-				<version>${lapsa-arquillian-test.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>tech.lapsa.insurance</groupId>
 				<artifactId>insurance-domain</artifactId>
 				<version>${insurance-domain.version}</version>
 			</dependency>
-			<!-- own -->
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>insurance-dao-client</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>insurance-dao</artifactId>
-				<version>${project.version}</version>
-				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>insurance-dao-app</artifactId>
-				<version>${project.version}</version>
-				<type>ear</type>
-			</dependency>
-			<!-- test -->
-			<dependency>
-				<groupId>com.h2database</groupId>
-				<artifactId>h2</artifactId>
-				<version>1.4.192</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mariadb.jdbc</groupId>
-				<artifactId>mariadb-java-client</artifactId>
-				<version>1.4.4</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
+	<dependencies>
+		<!-- tech -->
+		<dependency>
+			<groupId>tech.lapsa.patterns</groupId>
+			<artifactId>patterns-dao-api</artifactId>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
+		<!-- oldies -->
+		<dependency>
+			<groupId>tech.lapsa.insurance</groupId>
+			<artifactId>insurance-domain</artifactId>
+			<scope>compile</scope>
+			<optional>false</optional>
+		</dependency>
+		<!-- Payara -->
+		<dependency>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>org.eclipse.persistence.core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- JavaEE -->
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>javax.ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
 	<scm>
-		<connection>scm:git:https://gitlab.lapsa.tech/lapsa/insurance/dao.git</connection>
-		<developerConnection>scm:git:https://gitlab.lapsa.tech/lapsa/insurance/dao.git</developerConnection>
+		<connection>scm:git:https://gitlab.lapsa.tech/lapsa/insurance/dao-client.git</connection>
+		<developerConnection>scm:git:https://gitlab.lapsa.tech/lapsa/insurance/dao-client.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
 		<system>gitlab</system>
-		<url>https://gitlab.lapsa.tech/lapsa/insurance/dao/issues</url>
+		<url>https://gitlab.lapsa.tech/lapsa/insurance/dao-client/issues</url>
 	</issueManagement>
 
 </project>
