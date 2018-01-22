@@ -19,7 +19,7 @@
 		<javax-javaee-bom.version>7.0a</javax-javaee-bom.version>
 		<payara-bom.version>4.1.2-2</payara-bom.version>
 		<!-- tech -->
-		<patterns-dao.version>1.2</patterns-dao.version>
+		<patterns-dao.version>1.2.1</patterns-dao.version>
 		<insurance-domain.version>2.5-SNAPSHOT</insurance-domain.version>
 	</properties>
 
