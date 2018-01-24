@@ -9,7 +9,6 @@ import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.InsuranceRequestType;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
-import com.lapsa.insurance.elements.RequestSource;
 import com.lapsa.insurance.elements.RequestStatus;
 import com.lapsa.insurance.elements.TransactionProblem;
 import com.lapsa.insurance.elements.TransactionStatus;
@@ -27,7 +26,6 @@ public class RequestFilter implements Serializable {
     private String requesterNameMask;
 
     private RequestStatus requestStatus;
-    private RequestSource requestSource;
     private ProgressStatus progressStatus;
 
     private LocalDateTime createdAfter;
@@ -229,18 +227,6 @@ public class RequestFilter implements Serializable {
 
     public void setClosedBy(User closedBy) {
 	this.closedBy = closedBy;
-    }
-
-    public RequestSource getRequestSource() {
-	return requestSource;
-    }
-
-    public Optional<RequestSource> optionalRequestSource() {
-	return MyOptionals.of(getRequestSource());
-    }
-
-    public void setRequestSource(RequestSource requestSource) {
-	this.requestSource = requestSource;
     }
 
     public TaxpayerNumber getRequesterTaxpayerNumber() {
