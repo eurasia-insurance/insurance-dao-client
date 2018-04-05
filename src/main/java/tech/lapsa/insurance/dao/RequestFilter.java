@@ -44,6 +44,7 @@ public class RequestFilter implements Serializable {
     private PaymentStatus paymentStatus;
     private String paymentInvoiceNumber;
     private String paymentReference;
+    private String paymentMethodNameMask;
     private TransactionStatus transactionStatus;
     private String agreementNumberMask;
     private TransactionProblem transactionProblem;
@@ -243,5 +244,13 @@ public class RequestFilter implements Serializable {
 
     public ZoneId getZoneId() {
 	return ZoneId.systemDefault();
+    }
+
+    public String getPaymentMethodNameMask() {
+        return paymentMethodNameMask;
+    }
+
+    public void setPaymentMethodNameMask(String paymentMethodNameMask) {
+        this.paymentMethodNameMask = paymentMethodNameMask;
     }
 }
