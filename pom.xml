@@ -9,7 +9,7 @@
 
 	<groupId>tech.lapsa.insurance</groupId>
 	<artifactId>insurance-dao-client</artifactId>
-	<version>1.2.4-SNAPSHOT</version>
+	<version>1.2.4</version>
 	<packaging>jar</packaging>
 
 	<name>Insurance Lib : DAO : EJB-client</name>
@@ -87,7 +87,7 @@
 	<scm>
 		<connection>scm:git:https://gitlab.lapsa.tech/lapsa/insurance/dao-client.git</connection>
 		<developerConnection>scm:git:https://gitlab.lapsa.tech/lapsa/insurance/dao-client.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>v1.2.4</tag>
 	</scm>
 
 	<issueManagement>
