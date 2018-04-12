@@ -31,5 +31,9 @@ public interface UserDAO extends GeneralDAO<User, Integer>, EJBConstants {
 
     List<User> findAllWhoCreatedRequest();
 
+    List<User> findAllWhoEverAcceptRequest();
+
+    List<User> findAllWhoEverCompleteRequest();
+
     List<User> findAllWithNoGroup();
 }
