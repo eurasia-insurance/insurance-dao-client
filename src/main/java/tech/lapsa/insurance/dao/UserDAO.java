@@ -29,7 +29,15 @@ public interface UserDAO extends GeneralDAO<User, Integer>, EJBConstants {
 
     List<User> findVisible();
 
+    @Deprecated
+    // TODO To be removed in the future releases
     List<User> findAllWhoCreatedRequest();
+
+    List<User> findAllWhoEverCreatedRequest();
+
+    List<User> findAllWhoEverAcceptRequest();
+
+    List<User> findAllWhoEverCompleteRequest();
 
     List<User> findAllWithNoGroup();
 }
