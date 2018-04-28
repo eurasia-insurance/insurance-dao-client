@@ -45,6 +45,8 @@ public class RequestFilter implements Serializable {
     private String paymentInvoiceNumber;
     private String paymentReference;
     private String paymentMethodNameMask;
+    private String paymentCard;
+    private String paymentCardBank;
     private TransactionStatus transactionStatus;
     private String agreementNumberMask;
     private TransactionProblem transactionProblem;
@@ -247,10 +249,35 @@ public class RequestFilter implements Serializable {
     }
 
     public String getPaymentMethodNameMask() {
-        return paymentMethodNameMask;
+	return paymentMethodNameMask;
     }
 
     public void setPaymentMethodNameMask(String paymentMethodNameMask) {
-        this.paymentMethodNameMask = paymentMethodNameMask;
+	this.paymentMethodNameMask = paymentMethodNameMask;
     }
+
+    public String getPaymentCardBank() {
+	return paymentCardBank;
+    }
+
+    public Optional<String> optPaymentCardBank() {
+	return MyOptionals.of(paymentCardBank);
+    }
+
+    public void setPaymentCardBank(String paymentCardBank) {
+	this.paymentCardBank = paymentCardBank;
+    }
+
+    public String getPaymentCard() {
+	return paymentCard;
+    }
+
+    public Optional<String> optPaymentCard() {
+	return MyOptionals.of(paymentCard);
+    }
+
+    public void setPaymentCard(String paymentCard) {
+	this.paymentCard = paymentCard;
+    }
+
 }
