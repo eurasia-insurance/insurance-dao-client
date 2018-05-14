@@ -12,12 +12,15 @@ public interface GeneralInsuranceRequestDAO<T extends InsuranceRequest> extends 
 	    extends GeneralInsuranceRequestDAO<T>, GeneralRequestDAOLocal<T> {
 
 	List<T> findByPaymentInvoiceNumber(String invoiceNumber) throws IllegalArgument;
+
+	List<T> findByAgreementNumber(String agreementNumber) throws IllegalArgument;
     }
 
     public interface GeneralInsuranceRequestDAORemote<T extends InsuranceRequest>
 	    extends GeneralInsuranceRequestDAO<T>, GeneralRequestDAORemote<T> {
 
 	List<T> findByPaymentInvoiceNumber(int from, int limit, String invoiceNumber) throws IllegalArgument;
-    }
 
+	List<T> findByAgreementNumber(int from, int limit, String agreementNumber) throws IllegalArgument;
+    }
 }
