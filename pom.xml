@@ -20,7 +20,7 @@
 		<payara-bom.version>4.1.2-2</payara-bom.version>
 		<!-- tech -->
 		<patterns-dao.version>1.2.1</patterns-dao.version>
-		<insurance-domain.version>2.5.3-SNAPSHOT</insurance-domain.version>
+		<insurance-domain.version>2.5.3</insurance-domain.version>
 	</properties>
 
 	<dependencyManagement>
