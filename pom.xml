@@ -9,18 +9,18 @@
 
 	<groupId>tech.lapsa.insurance</groupId>
 	<artifactId>insurance-dao-client</artifactId>
-	<version>1.3.4</version>
+	<version>CURRENT-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Insurance Lib : DAO : EJB-client</name>
 
 	<properties>
 		<!-- BOMS -->
-		<javax-javaee-bom.version>7.0a</javax-javaee-bom.version>
-		<payara-bom.version>4.1.2-2</payara-bom.version>
+		<javax-javaee-bom.version>CURRENT-SNAPSHOT</javax-javaee-bom.version>
+		<payara-bom.version>CURRENT-SNAPSHOT</payara-bom.version>
 		<!-- tech -->
-		<patterns-dao.version>1.2.1</patterns-dao.version>
-		<insurance-domain.version>2.5.3</insurance-domain.version>
+		<patterns-dao.version>CURRENT-SNAPSHOT</patterns-dao.version>
+		<insurance-domain.version>CURRENT-SNAPSHOT</insurance-domain.version>
 	</properties>
 
 	<dependencyManagement>
