@@ -34,7 +34,7 @@ public class RequestFilter implements Serializable {
     private LocalDateTime completedBefore;
 
     private User createdBy;
-    private User acceptedBy;
+    private User pickedBy;
     private User completedBy;
     private User closedBy;
 
@@ -120,12 +120,12 @@ public class RequestFilter implements Serializable {
 	this.completedBefore = completedBefore;
     }
 
-    public User getAcceptedBy() {
-	return acceptedBy;
+    public User getPickedBy() {
+	return pickedBy;
     }
 
-    public void setAcceptedBy(User acceptedBy) {
-	this.acceptedBy = acceptedBy;
+    public void setPickedBy(User pickedBy) {
+	this.pickedBy = pickedBy;
     }
 
     public User getCompletedBy() {
