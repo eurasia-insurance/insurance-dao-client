@@ -42,7 +42,7 @@ public class RequestFilter implements Serializable {
 
     private InsuranceRequestType insuranceRequestType;
     private PaymentStatus paymentStatus;
-    private String paymentInvoiceNumber;
+    private String invoiceNumber;
     private String paymentReference;
     private String paymentMethodNameMask;
     private String paymentCard;
@@ -160,16 +160,16 @@ public class RequestFilter implements Serializable {
 	this.paymentStatus = paymentStatus;
     }
 
-    public String getPaymentInvoiceNumber() {
-	return paymentInvoiceNumber;
+    public String getInvoiceNumber() {
+	return invoiceNumber;
     }
 
-    public Optional<String> optionalPaymentInvoiceNumber() {
-	return MyOptionals.of(getPaymentInvoiceNumber());
+    public Optional<String> optionalInvoiceNumber() {
+	return MyOptionals.of(getInvoiceNumber());
     }
 
-    public void setPaymentInvoiceNumber(String paymentInvoiceNumber) {
-	this.paymentInvoiceNumber = paymentInvoiceNumber;
+    public void setInvoiceNumber(String invoiceNumber) {
+	this.invoiceNumber = invoiceNumber;
     }
 
     public String getPaymentReference() {
