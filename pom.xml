@@ -14,45 +14,16 @@
 
 	<name>Insurance Lib : DAO : EJB-client</name>
 
-	<properties>
-		<!-- BOMS -->
-		<javax-javaee-bom.version>CURRENT-SNAPSHOT</javax-javaee-bom.version>
-		<payara-bom.version>CURRENT-SNAPSHOT</payara-bom.version>
-		<!-- tech -->
-		<patterns-dao.version>CURRENT-SNAPSHOT</patterns-dao.version>
-		<insurance-domain.version>CURRENT-SNAPSHOT</insurance-domain.version>
-	</properties>
-
 	<dependencyManagement>
 		<dependencies>
-			<!-- BOMS -->
 			<dependency>
-				<groupId>tech.lapsa.javax</groupId>
-				<artifactId>javax-javaee-bom</artifactId>
-				<version>${javax-javaee-bom.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>tech.lapsa.payara</groupId>
-				<artifactId>payara-bom</artifactId>
-				<version>${payara-bom.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
-			<dependency>
-				<groupId>tech.lapsa.patterns</groupId>
-				<artifactId>patterns-dao-root</artifactId>
-				<version>${patterns-dao.version}</version>
+				<groupId>tech.lapsa.insurance</groupId>
+				<artifactId>insurance-bom</artifactId>
+				<version>CURRENT-SNAPSHOT</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 			<!-- tech -->
-			<dependency>
-				<groupId>tech.lapsa.insurance</groupId>
-				<artifactId>insurance-domain</artifactId>
-				<version>${insurance-domain.version}</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
