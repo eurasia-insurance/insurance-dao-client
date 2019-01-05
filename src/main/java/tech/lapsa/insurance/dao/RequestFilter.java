@@ -10,7 +10,7 @@ import com.lapsa.insurance.elements.InsuranceRequestType;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
 import com.lapsa.insurance.elements.RequestStatus;
-import com.lapsa.insurance.elements.TransactionProblem;
+import com.lapsa.insurance.elements.RequestCancelationReason;
 import com.lapsa.insurance.elements.ContractStatus;
 
 import tech.lapsa.java.commons.function.MyOptionals;
@@ -49,7 +49,7 @@ public class RequestFilter implements Serializable {
     private String paymentCardBank;
     private ContractStatus contractStatus;
     private String agreementNumberMask;
-    private TransactionProblem transactionProblem;
+    private RequestCancelationReason requestCancelationReason;
 
     private TaxpayerNumber requesterTaxpayerNumber;
 
@@ -204,16 +204,16 @@ public class RequestFilter implements Serializable {
 	this.agreementNumberMask = agreementNumberMask;
     }
 
-    public TransactionProblem getTransactionProblem() {
-	return transactionProblem;
+    public RequestCancelationReason getRequestCancelationReason() {
+	return requestCancelationReason;
     }
 
-    public Optional<TransactionProblem> optionalTransactionProblem() {
-	return MyOptionals.of(getTransactionProblem());
+    public Optional<RequestCancelationReason> optionalRequestCancelationReason() {
+	return MyOptionals.of(getRequestCancelationReason());
     }
 
-    public void setTransactionProblem(TransactionProblem transactionProblem) {
-	this.transactionProblem = transactionProblem;
+    public void setRequestCancelationReason(RequestCancelationReason requestCancelationReason) {
+	this.requestCancelationReason = requestCancelationReason;
     }
 
     public User getCreatedBy() {
