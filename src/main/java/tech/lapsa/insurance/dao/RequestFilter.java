@@ -10,8 +10,8 @@ import com.lapsa.insurance.elements.InsuranceRequestType;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
 import com.lapsa.insurance.elements.RequestStatus;
-import com.lapsa.insurance.elements.TransactionProblem;
-import com.lapsa.insurance.elements.TransactionStatus;
+import com.lapsa.insurance.elements.RequestCancelationReason;
+import com.lapsa.insurance.elements.ContractStatus;
 
 import tech.lapsa.java.commons.function.MyOptionals;
 import tech.lapsa.kz.taxpayer.TaxpayerNumber;
@@ -47,9 +47,9 @@ public class RequestFilter implements Serializable {
     private String paymentMethodNameMask;
     private String paymentCard;
     private String paymentCardBank;
-    private TransactionStatus transactionStatus;
+    private ContractStatus contractStatus;
     private String agreementNumberMask;
-    private TransactionProblem transactionProblem;
+    private RequestCancelationReason requestCancelationReason;
 
     private TaxpayerNumber requesterTaxpayerNumber;
 
@@ -184,16 +184,16 @@ public class RequestFilter implements Serializable {
 	this.paymentReference = paymentReference;
     }
 
-    public TransactionStatus getTransactionStatus() {
-	return transactionStatus;
+    public ContractStatus getContractStatus() {
+	return contractStatus;
     }
 
-    public Optional<TransactionStatus> optionalTransactionStatus() {
-	return MyOptionals.of(getTransactionStatus());
+    public Optional<ContractStatus> optionalContractStatus() {
+	return MyOptionals.of(getContractStatus());
     }
 
-    public void setTransactionStatus(TransactionStatus transactionStatus) {
-	this.transactionStatus = transactionStatus;
+    public void setContractStatus(ContractStatus contractStatus) {
+	this.contractStatus = contractStatus;
     }
 
     public String getAgreementNumberMask() {
@@ -204,16 +204,16 @@ public class RequestFilter implements Serializable {
 	this.agreementNumberMask = agreementNumberMask;
     }
 
-    public TransactionProblem getTransactionProblem() {
-	return transactionProblem;
+    public RequestCancelationReason getRequestCancelationReason() {
+	return requestCancelationReason;
     }
 
-    public Optional<TransactionProblem> optionalTransactionProblem() {
-	return MyOptionals.of(getTransactionProblem());
+    public Optional<RequestCancelationReason> optionalRequestCancelationReason() {
+	return MyOptionals.of(getRequestCancelationReason());
     }
 
-    public void setTransactionProblem(TransactionProblem transactionProblem) {
-	this.transactionProblem = transactionProblem;
+    public void setRequestCancelationReason(RequestCancelationReason requestCancelationReason) {
+	this.requestCancelationReason = requestCancelationReason;
     }
 
     public User getCreatedBy() {
