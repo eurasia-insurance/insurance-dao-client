@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.lapsa.insurance.domain.Request;
 import com.lapsa.insurance.domain.crm.User;
-import com.lapsa.insurance.elements.RequestStatus;
 
 import tech.lapsa.java.commons.exceptions.IllegalArgument;
 import tech.lapsa.patterns.dao.GeneralDAO;
@@ -13,9 +12,9 @@ public interface GeneralRequestDAO<T extends Request> extends GeneralDAO<T, Inte
 
     public interface GeneralRequestDAOLocal<T extends Request> extends GeneralRequestDAO<T> {
 
-	List<T> findByStatus(RequestStatus status) throws IllegalArgument;
+	List<T> findByArchived(boolean archived) throws IllegalArgument;
 
-	List<T> findAllOpen();
+	List<T> findAllInbox();
 
 	List<T> findAll();
 
@@ -27,9 +26,9 @@ public interface GeneralRequestDAO<T extends Request> extends GeneralDAO<T, Inte
 
     public interface GeneralRequestDAORemote<T extends Request> extends GeneralRequestDAO<T> {
 
-	List<T> findByStatus(int from, int limit, RequestStatus status) throws IllegalArgument;
+	List<T> findByArchived(int from, int limit, boolean archived) throws IllegalArgument;
 
-	List<T> findAllOpen(int from, int limit) throws IllegalArgument;
+	List<T> findAllInbox(int from, int limit) throws IllegalArgument;
 
 	ListWithStats<T> findAllOpenWithStats(int from, int limit) throws IllegalArgument;
 
@@ -51,9 +50,9 @@ public interface GeneralRequestDAO<T extends Request> extends GeneralDAO<T, Inte
 
     Long countAll();
 
-    Long countAllOpen();
+    Long countAllInbox();
 
-    Long countByStatus(RequestStatus status) throws IllegalArgument;
+    Long countByArchived(boolean archived) throws IllegalArgument;
 
     Long countByFilter(RequestFilter filter) throws IllegalArgument;
 

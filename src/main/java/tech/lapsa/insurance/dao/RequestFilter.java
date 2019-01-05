@@ -6,12 +6,11 @@ import java.time.ZoneId;
 import java.util.Optional;
 
 import com.lapsa.insurance.domain.crm.User;
+import com.lapsa.insurance.elements.ContractStatus;
 import com.lapsa.insurance.elements.InsuranceRequestType;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
-import com.lapsa.insurance.elements.RequestStatus;
 import com.lapsa.insurance.elements.RequestCancelationReason;
-import com.lapsa.insurance.elements.ContractStatus;
 
 import tech.lapsa.java.commons.function.MyOptionals;
 import tech.lapsa.kz.taxpayer.TaxpayerNumber;
@@ -25,7 +24,7 @@ public class RequestFilter implements Serializable {
     private Integer id;
     private String requesterNameMask;
 
-    private RequestStatus requestStatus;
+    private Boolean archived;
     private ProgressStatus progressStatus;
 
     private LocalDateTime createdAfter;
@@ -36,7 +35,6 @@ public class RequestFilter implements Serializable {
     private User createdBy;
     private User pickedBy;
     private User completedBy;
-    private User closedBy;
 
     // InsuranceRequest properties
 
@@ -72,12 +70,12 @@ public class RequestFilter implements Serializable {
 	this.requesterNameMask = requesterNameMask;
     }
 
-    public RequestStatus getRequestStatus() {
-	return requestStatus;
+    public Boolean getArchived() {
+	return archived;
     }
 
-    public void setRequestStatus(RequestStatus requestStatus) {
-	this.requestStatus = requestStatus;
+    public void setArchived(Boolean archived) {
+	this.archived = archived;
     }
 
     public ProgressStatus getProgressStatus() {
@@ -220,16 +218,8 @@ public class RequestFilter implements Serializable {
 	return createdBy;
     }
 
-    public User getClosedBy() {
-	return closedBy;
-    }
-
     public void setCreatedBy(User createdBy) {
 	this.createdBy = createdBy;
-    }
-
-    public void setClosedBy(User closedBy) {
-	this.closedBy = closedBy;
     }
 
     public TaxpayerNumber getRequesterTaxpayerNumber() {
