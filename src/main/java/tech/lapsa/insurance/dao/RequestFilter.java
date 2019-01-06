@@ -6,13 +6,13 @@ import java.time.ZoneId;
 import java.util.Optional;
 
 import com.lapsa.insurance.domain.crm.User;
+import com.lapsa.insurance.elements.ContractStatus;
 import com.lapsa.insurance.elements.InsuranceRequestType;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
-import com.lapsa.insurance.elements.RequestStatus;
 import com.lapsa.insurance.elements.RequestCancelationReason;
-import com.lapsa.insurance.elements.ContractStatus;
 
+import tech.lapsa.java.commons.function.MyObjects;
 import tech.lapsa.java.commons.function.MyOptionals;
 import tech.lapsa.kz.taxpayer.TaxpayerNumber;
 
@@ -20,41 +20,16 @@ public class RequestFilter implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // Request properties
-
-    private Integer id;
-    private String requesterNameMask;
-
-    private RequestStatus requestStatus;
-    private ProgressStatus progressStatus;
-
-    private LocalDateTime createdAfter;
-    private LocalDateTime createdBefore;
-    private LocalDateTime completedAfter;
-    private LocalDateTime completedBefore;
-
-    private User createdBy;
-    private User pickedBy;
-    private User completedBy;
-    private User closedBy;
-
-    // InsuranceRequest properties
-
-    private InsuranceRequestType insuranceRequestType;
-    private PaymentStatus paymentStatus;
-    private String invoiceNumber;
-    private String paymentReference;
-    private String paymentMethodNameMask;
-    private String paymentCard;
-    private String paymentCardBank;
-    private ContractStatus contractStatus;
-    private String agreementNumberMask;
-    private RequestCancelationReason requestCancelationReason;
-
-    private TaxpayerNumber requesterTaxpayerNumber;
-
     public RequestFilter() {
     }
+
+    public ZoneId getZoneId() {
+	return ZoneId.systemDefault();
+    }
+
+    // id
+
+    private Integer id;
 
     public Integer getId() {
 	return id;
@@ -64,6 +39,10 @@ public class RequestFilter implements Serializable {
 	this.id = id;
     }
 
+    // requesterNameMask
+
+    private String requesterNameMask;
+
     public String getRequesterNameMask() {
 	return requesterNameMask;
     }
@@ -72,13 +51,49 @@ public class RequestFilter implements Serializable {
 	this.requesterNameMask = requesterNameMask;
     }
 
-    public RequestStatus getRequestStatus() {
-	return requestStatus;
+    // showMode
+
+    public enum ShowMode {
+	INBOX, ARCHIVED, ALL;
     }
 
-    public void setRequestStatus(RequestStatus requestStatus) {
-	this.requestStatus = requestStatus;
+    private ShowMode showMode = ShowMode.INBOX;
+
+    public ShowMode getShowMode() {
+	return showMode;
     }
+
+    public void setShowMode(ShowMode showMode) {
+	this.showMode = MyObjects.requireNonNull(showMode, "showMode");
+    }
+
+    public boolean isShowInbox() {
+	return ShowMode.INBOX.equals(showMode);
+    }
+
+    public boolean isShowArchived() {
+	return ShowMode.ARCHIVED.equals(showMode);
+    }
+
+    public boolean isShowAll() {
+	return ShowMode.ALL.equals(showMode);
+    }
+
+    public void letShowInbox() {
+	this.showMode = ShowMode.INBOX;
+    }
+
+    public void letShowArchived() {
+	this.showMode = ShowMode.ARCHIVED;
+    }
+
+    public void letShowAll() {
+	this.showMode = ShowMode.ALL;
+    }
+
+    // progress status
+
+    private ProgressStatus progressStatus;
 
     public ProgressStatus getProgressStatus() {
 	return progressStatus;
@@ -88,6 +103,10 @@ public class RequestFilter implements Serializable {
 	this.progressStatus = progressStatus;
     }
 
+    // createdAfter
+
+    private LocalDateTime createdAfter;
+
     public LocalDateTime getCreatedAfter() {
 	return createdAfter;
     }
@@ -95,6 +114,10 @@ public class RequestFilter implements Serializable {
     public void setCreatedAfter(LocalDateTime createdAfter) {
 	this.createdAfter = createdAfter;
     }
+
+    // createdBefore
+
+    private LocalDateTime createdBefore;
 
     public LocalDateTime getCreatedBefore() {
 	return createdBefore;
@@ -104,6 +127,10 @@ public class RequestFilter implements Serializable {
 	this.createdBefore = createdBefore;
     }
 
+    // completedAfter
+
+    private LocalDateTime completedAfter;
+
     public LocalDateTime getCompletedAfter() {
 	return completedAfter;
     }
@@ -111,6 +138,10 @@ public class RequestFilter implements Serializable {
     public void setCompletedAfter(LocalDateTime completedAfter) {
 	this.completedAfter = completedAfter;
     }
+
+    // completedBefore
+
+    private LocalDateTime completedBefore;
 
     public LocalDateTime getCompletedBefore() {
 	return completedBefore;
@@ -120,6 +151,10 @@ public class RequestFilter implements Serializable {
 	this.completedBefore = completedBefore;
     }
 
+    // pickedBy
+
+    private User pickedBy;
+
     public User getPickedBy() {
 	return pickedBy;
     }
@@ -127,6 +162,10 @@ public class RequestFilter implements Serializable {
     public void setPickedBy(User pickedBy) {
 	this.pickedBy = pickedBy;
     }
+
+    // completedBy
+
+    private User completedBy;
 
     public User getCompletedBy() {
 	return completedBy;
@@ -136,41 +175,57 @@ public class RequestFilter implements Serializable {
 	this.completedBy = completedBy;
     }
 
+    // insuranceRequestType
+
+    private InsuranceRequestType insuranceRequestType;
+
     public InsuranceRequestType getRequestType() {
 	return insuranceRequestType;
     }
 
     public Optional<InsuranceRequestType> optionalRequestType() {
-	return MyOptionals.of(getRequestType());
+	return MyOptionals.of(insuranceRequestType);
     }
 
     public void setRequestType(InsuranceRequestType insuranceRequestType) {
 	this.insuranceRequestType = insuranceRequestType;
     }
 
+    // paymentStatus
+
+    private PaymentStatus paymentStatus;
+
     public PaymentStatus getPaymentStatus() {
 	return paymentStatus;
     }
 
     public Optional<PaymentStatus> optionalPaymentStatus() {
-	return MyOptionals.of(getPaymentStatus());
+	return MyOptionals.of(paymentStatus);
     }
 
     public void setPaymentStatus(PaymentStatus paymentStatus) {
 	this.paymentStatus = paymentStatus;
     }
 
+    // invoiceNumber
+
+    private String invoiceNumber;
+
     public String getInvoiceNumber() {
 	return invoiceNumber;
     }
 
     public Optional<String> optionalInvoiceNumber() {
-	return MyOptionals.of(getInvoiceNumber());
+	return MyOptionals.of(invoiceNumber);
     }
 
     public void setInvoiceNumber(String invoiceNumber) {
 	this.invoiceNumber = invoiceNumber;
     }
+
+    // paymentReference
+
+    private String paymentReference;
 
     public String getPaymentReference() {
 	return paymentReference;
@@ -184,17 +239,25 @@ public class RequestFilter implements Serializable {
 	this.paymentReference = paymentReference;
     }
 
+    // contractStatus
+
+    private ContractStatus contractStatus;
+
     public ContractStatus getContractStatus() {
 	return contractStatus;
     }
 
     public Optional<ContractStatus> optionalContractStatus() {
-	return MyOptionals.of(getContractStatus());
+	return MyOptionals.of(contractStatus);
     }
 
     public void setContractStatus(ContractStatus contractStatus) {
 	this.contractStatus = contractStatus;
     }
+
+    // agreementNumberMask
+
+    private String agreementNumberMask;
 
     public String getAgreementNumberMask() {
 	return agreementNumberMask;
@@ -204,33 +267,37 @@ public class RequestFilter implements Serializable {
 	this.agreementNumberMask = agreementNumberMask;
     }
 
+    // requestCancelationReason
+
+    private RequestCancelationReason requestCancelationReason;
+
     public RequestCancelationReason getRequestCancelationReason() {
 	return requestCancelationReason;
     }
 
     public Optional<RequestCancelationReason> optionalRequestCancelationReason() {
-	return MyOptionals.of(getRequestCancelationReason());
+	return MyOptionals.of(requestCancelationReason);
     }
 
     public void setRequestCancelationReason(RequestCancelationReason requestCancelationReason) {
 	this.requestCancelationReason = requestCancelationReason;
     }
 
+    // createdBy
+
+    private User createdBy;
+
     public User getCreatedBy() {
 	return createdBy;
-    }
-
-    public User getClosedBy() {
-	return closedBy;
     }
 
     public void setCreatedBy(User createdBy) {
 	this.createdBy = createdBy;
     }
 
-    public void setClosedBy(User closedBy) {
-	this.closedBy = closedBy;
-    }
+    // requesterTaxpayerNumber
+
+    private TaxpayerNumber requesterTaxpayerNumber;
 
     public TaxpayerNumber getRequesterTaxpayerNumber() {
 	return requesterTaxpayerNumber;
@@ -244,9 +311,9 @@ public class RequestFilter implements Serializable {
 	this.requesterTaxpayerNumber = requesterTaxpayerNumber;
     }
 
-    public ZoneId getZoneId() {
-	return ZoneId.systemDefault();
-    }
+    // paymentMethodNameMask
+
+    private String paymentMethodNameMask;
 
     public String getPaymentMethodNameMask() {
 	return paymentMethodNameMask;
@@ -255,6 +322,10 @@ public class RequestFilter implements Serializable {
     public void setPaymentMethodNameMask(String paymentMethodNameMask) {
 	this.paymentMethodNameMask = paymentMethodNameMask;
     }
+
+    // paymentCardBank
+
+    private String paymentCardBank;
 
     public String getPaymentCardBank() {
 	return paymentCardBank;
@@ -268,6 +339,10 @@ public class RequestFilter implements Serializable {
 	this.paymentCardBank = paymentCardBank;
     }
 
+    // paymentCard
+
+    private String paymentCard;
+
     public String getPaymentCard() {
 	return paymentCard;
     }
@@ -279,5 +354,4 @@ public class RequestFilter implements Serializable {
     public void setPaymentCard(String paymentCard) {
 	this.paymentCard = paymentCard;
     }
-
 }
