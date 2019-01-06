@@ -6,11 +6,11 @@ import java.time.ZoneId;
 import java.util.Optional;
 
 import com.lapsa.insurance.domain.crm.User;
-import com.lapsa.insurance.elements.ContractStatus;
+import com.lapsa.insurance.elements.InsuranceRequestStatus;
 import com.lapsa.insurance.elements.InsuranceRequestType;
 import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
-import com.lapsa.insurance.elements.RequestCancelationReason;
+import com.lapsa.insurance.elements.InsuranceRequestCancellationReason;
 
 import tech.lapsa.java.commons.function.MyObjects;
 import tech.lapsa.java.commons.function.MyOptionals;
@@ -239,20 +239,20 @@ public class RequestFilter implements Serializable {
 	this.paymentReference = paymentReference;
     }
 
-    // contractStatus
+    // insuranceRequestStatus
 
-    private ContractStatus contractStatus;
+    private InsuranceRequestStatus insuranceRequestStatus;
 
-    public ContractStatus getContractStatus() {
-	return contractStatus;
+    public InsuranceRequestStatus getInsuranceRequestStatus() {
+	return insuranceRequestStatus;
     }
 
-    public Optional<ContractStatus> optionalContractStatus() {
-	return MyOptionals.of(contractStatus);
+    public Optional<InsuranceRequestStatus> optionalInsuranceRequestStatus() {
+	return MyOptionals.of(insuranceRequestStatus);
     }
 
-    public void setContractStatus(ContractStatus contractStatus) {
-	this.contractStatus = contractStatus;
+    public void setInsuranceRequestStatus(InsuranceRequestStatus insuranceRequestStatus) {
+	this.insuranceRequestStatus = insuranceRequestStatus;
     }
 
     // agreementNumberMask
@@ -267,20 +267,20 @@ public class RequestFilter implements Serializable {
 	this.agreementNumberMask = agreementNumberMask;
     }
 
-    // requestCancelationReason
+    // insuranceRequestCancellationReason
 
-    private RequestCancelationReason requestCancelationReason;
+    private InsuranceRequestCancellationReason insuranceRequestCancellationReason;
 
-    public RequestCancelationReason getRequestCancelationReason() {
-	return requestCancelationReason;
+    public InsuranceRequestCancellationReason getInsuranceRequestCancellationReason() {
+	return insuranceRequestCancellationReason;
     }
 
-    public Optional<RequestCancelationReason> optionalRequestCancelationReason() {
-	return MyOptionals.of(requestCancelationReason);
+    public Optional<InsuranceRequestCancellationReason> optionalInsuranceRequestCancellationReason() {
+	return MyOptionals.of(insuranceRequestCancellationReason);
     }
 
-    public void setRequestCancelationReason(RequestCancelationReason requestCancelationReason) {
-	this.requestCancelationReason = requestCancelationReason;
+    public void setInsuranceRequestCancellationReason(InsuranceRequestCancellationReason insuranceRequestCancellationReason) {
+	this.insuranceRequestCancellationReason = insuranceRequestCancellationReason;
     }
 
     // createdBy
