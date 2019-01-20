@@ -8,7 +8,6 @@ import java.util.Optional;
 import com.lapsa.insurance.domain.crm.User;
 import com.lapsa.insurance.elements.InsuranceRequestStatus;
 import com.lapsa.insurance.elements.InsuranceRequestType;
-import com.lapsa.insurance.elements.PaymentStatus;
 import com.lapsa.insurance.elements.ProgressStatus;
 import com.lapsa.insurance.elements.InsuranceRequestCancellationReason;
 
@@ -189,22 +188,6 @@ public class RequestFilter implements Serializable {
 
     public void setRequestType(InsuranceRequestType insuranceRequestType) {
 	this.insuranceRequestType = insuranceRequestType;
-    }
-
-    // paymentStatus
-
-    private PaymentStatus paymentStatus;
-
-    public PaymentStatus getPaymentStatus() {
-	return paymentStatus;
-    }
-
-    public Optional<PaymentStatus> optionalPaymentStatus() {
-	return MyOptionals.of(paymentStatus);
-    }
-
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-	this.paymentStatus = paymentStatus;
     }
 
     // invoiceNumber
